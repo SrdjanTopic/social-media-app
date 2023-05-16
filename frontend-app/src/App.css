@@ -1,0 +1,16 @@
+#root {
+  text-align: center;
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+}
+
+.mainContent {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}

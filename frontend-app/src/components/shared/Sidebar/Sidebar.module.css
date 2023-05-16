@@ -1,0 +1,68 @@
+.sidebar {
+  /* position: fixed; */
+  width: fit-content;
+  max-width: 25%;
+  border-right: 1px solid hsla(0, 0%, 80%, 0.5);
+  height: calc(100vh - 2rem);
+  margin: 1rem 0;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.sidebarOptionWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+  text-decoration: none;
+  border-radius: 1rem;
+  transition: background-color 0.2s;
+  color: white;
+  padding: 0.2rem 1rem;
+}
+
+.sidebarOptionWrapper:hover {
+  background-color: hsla(0, 0%, 40%, 0.5);
+}
+
+.sidebarOptionWrapper .svgDiv {
+  height: 2rem;
+  width: 2rem;
+}
+
+.sidebarOptionWrapper svg {
+  height: 2rem;
+  width: 2rem;
+}
+
+.sidebarOptionWrapper span {
+  overflow: hidden;
+}
+
+.sidebar button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.3rem;
+  text-decoration: none;
+  border-radius: 1rem;
+  transition: background-color 0.2s;
+  background-color: hsla(0, 0%, 50%, 0.3);
+  color: white;
+  margin-top: auto;
+  border: none;
+  padding: 0.2rem 1rem;
+  cursor: pointer;
+}
+
+.sidebar button:hover {
+  background-color: hsla(0, 0%, 50%, 0.5);
+}
+
+.sidebar button svg {
+  height: 2rem;
+  width: 2rem;
+}
