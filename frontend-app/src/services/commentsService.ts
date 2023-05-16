@@ -1,11 +1,11 @@
-import axios from "axios";
+import _axios from "./_axios";
 
-const url = "http://localhost:9000/comments";
+const url = import.meta.env.VITE_URL_BACK + "/comments";
 
 async function isMyComment(commentId: number) {
   try {
-    const res = await axios.get(`${url}/check/${commentId}`);
-    return res.data;
+    const res = await _axios.get(`${url}/check/${commentId}`);
+    return res;
   } catch (ex) {
     throw new Error("Some error occured");
   }
@@ -13,8 +13,8 @@ async function isMyComment(commentId: number) {
 
 async function getCommentsForPost(postId: number) {
   try {
-    const res = await axios.get(`${url}/${postId}`);
-    return res.data;
+    const res = await _axios.get(`${url}/${postId}`);
+    return res;
   } catch (ex) {
     throw new Error("Some error occured");
   }
@@ -22,9 +22,9 @@ async function getCommentsForPost(postId: number) {
 
 async function writeCommentForPost(commentInfo: WriteCommentForPost) {
   try {
-    const res = await axios.post(`${url}`, commentInfo);
-    console.log(res.data);
-    return res.data;
+    const res = await _axios.post(`${url}`, commentInfo);
+    console.log(res);
+    return res;
   } catch (ex) {
     throw new Error("Error!");
   }
@@ -32,8 +32,8 @@ async function writeCommentForPost(commentInfo: WriteCommentForPost) {
 
 async function deleteComment(commentId: number) {
   try {
-    const res = await axios.delete(`${url}/${commentId}`);
-    return res.data;
+    const res = await _axios.deleteReq(`${url}/${commentId}`);
+    return res;
   } catch (ex) {
     throw new Error("Some error occured");
   }

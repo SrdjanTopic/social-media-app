@@ -5,7 +5,7 @@ const url = "http://localhost:9000/friends";
 async function isMyFriend(userId: number) {
   try {
     const res = await axios.get(`${url}/areFriends/${userId}`);
-    return res.data;
+    return res;
   } catch (ex) {
     throw new Error("Some error occured");
   }
@@ -14,7 +14,7 @@ async function isMyFriend(userId: number) {
 async function getMyFriends() {
   try {
     const res = await axios.get(`${url}`);
-    return res.data;
+    return res;
   } catch (ex) {
     throw new Error("Some error occured");
   }
@@ -23,7 +23,7 @@ async function getMyFriends() {
 async function getFriendsForUser(userId: number) {
   try {
     const res = await axios.get(`${url}/${userId}`);
-    return res.data;
+    return res;
   } catch (ex) {
     throw new Error("Some error occured");
   }
@@ -32,7 +32,7 @@ async function getFriendsForUser(userId: number) {
 async function unfriendUser(userId: number) {
   try {
     const res = await axios.delete(`${url}/${userId}`);
-    return res.data;
+    return res;
   } catch (ex) {
     throw new Error("Some error occured");
   }

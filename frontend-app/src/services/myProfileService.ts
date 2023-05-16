@@ -7,14 +7,14 @@ async function getCurrentUser(): Promise<User | null> {
     const res = await _axios.get(`${url}`);
     return res;
   } catch (err) {
-    throw new Error("Error");
+    return null;
   }
 }
 
 async function updateProfile(userCredentials: UpdateUser) {
   try {
     const res = await _axios.put(`${url}/update`, userCredentials);
-    return res.data;
+    return res;
   } catch (ex) {
     throw new Error("Username already taken!");
   }
@@ -24,7 +24,7 @@ async function changePassword(passwords: UpdatePassword) {
   console.log(passwords);
   try {
     const res = await _axios.put(`${url}/changePassword`, passwords);
-    return res.data;
+    return res;
   } catch (ex) {
     console.log(ex);
     throw new Error("Error");

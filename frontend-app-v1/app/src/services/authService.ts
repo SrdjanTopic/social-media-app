@@ -14,7 +14,7 @@ async function isLoggedIn() {
 async function login(loginCredentials: UserLogin) {
   try {
     const res = await axios.post(`${url}/login`, loginCredentials);
-    localStorage.setItem("token", res.data);
+    localStorage.setItem("token", res);
     window.location.reload();
   } catch (ex) {
     throw new Error("Incorrect username or password!");

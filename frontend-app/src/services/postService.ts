@@ -1,11 +1,11 @@
-import axios from "axios";
+import _axios from "./_axios";
 
-const url = "http://localhost:9000/posts";
+const url = import.meta.env.VITE_URL_BACK + "/posts";
 
 async function getFriendPosts() {
   try {
-    const res = await axios.get(`${url}/fromFriends`);
-    return res.data;
+    const res = await _axios.get(`${url}/fromFriends`);
+    return res;
   } catch (ex) {
     throw new Error("error!");
   }
@@ -13,8 +13,8 @@ async function getFriendPosts() {
 
 async function getUserPosts(userID: number) {
   try {
-    const res = await axios.get(`${url}/${userID}`);
-    return res.data;
+    const res = await _axios.get(`${url}/${userID}`);
+    return res;
   } catch (ex) {
     throw new Error("error!");
   }
@@ -22,8 +22,8 @@ async function getUserPosts(userID: number) {
 
 async function deletePost(postId: number) {
   try {
-    const res = await axios.delete(`${url}/${postId}`);
-    return res.data;
+    const res = await _axios.deleteReq(`${url}/${postId}`);
+    return res;
   } catch (ex) {
     throw new Error("error!");
   }
@@ -31,8 +31,8 @@ async function deletePost(postId: number) {
 
 async function createPost(text: string) {
   try {
-    const res = await axios.post(`${url}`, { text });
-    return res.data;
+    const res = await _axios.post(`${url}`, { text });
+    return res;
   } catch (ex) {
     throw new Error("error!");
   }
@@ -40,8 +40,8 @@ async function createPost(text: string) {
 
 async function updatePost(postId: number, text: string) {
   try {
-    const res = await axios.put(`${url}/${postId}`, { text });
-    return res.data;
+    const res = await _axios.put(`${url}/${postId}`, { text });
+    return res;
   } catch (ex) {
     throw new Error("error!");
   }
@@ -49,8 +49,8 @@ async function updatePost(postId: number, text: string) {
 
 async function isMyPost(postId: number) {
   try {
-    const res = await axios.get(`${url}/isMyPost/${postId}`);
-    return res.data;
+    const res = await _axios.get(`${url}/isMyPost/${postId}`);
+    return res;
   } catch (ex) {
     throw new Error("Some error occured");
   }

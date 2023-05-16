@@ -5,7 +5,7 @@ const url = "http://localhost:9000/img";
 async function getUserProfilePicture(userId: number) {
   try {
     const res = await axios.get(`${url}/user/${userId}`);
-    return res.data;
+    return res;
   } catch (err) {
     throw new Error("Error");
   }
@@ -18,7 +18,7 @@ async function saveUserProfilePicture(image: string | null) {
         image: image.split("base64,")[1],
       });
       window.location.reload();
-      return res.data;
+      return res;
     } catch (err) {
       throw new Error("Error");
     }
@@ -28,7 +28,7 @@ async function saveUserProfilePicture(image: string | null) {
 async function getPostPicture(postId: number) {
   try {
     const res = await axios.get(`${url}/post/${postId}`);
-    return res.data;
+    return res;
   } catch (err) {
     throw new Error("Error");
   }
@@ -41,7 +41,7 @@ async function savePostPicture(image: string | null, postId: number) {
         image: image.split("base64,")[1],
       });
       window.location.reload();
-      return res.data;
+      return res;
     } catch (err) {
       throw new Error("Error");
     }

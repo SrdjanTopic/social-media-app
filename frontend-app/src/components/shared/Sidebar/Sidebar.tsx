@@ -1,9 +1,13 @@
 import { useContext } from "react";
 import styles from "./Sidebar.module.css";
 import { UserContext } from "../../../App";
+import authService from "../../../services/authService";
 
 export default function Sidebar() {
   const currentUser = useContext(UserContext);
+  function handleLogout() {
+    authService.logout();
+  }
   return (
     <nav className={styles.sidebar}>
       <a className={styles.sidebarOptionWrapper} href={""}>
@@ -119,7 +123,7 @@ export default function Sidebar() {
         <span>Search users</span>
       </a>
 
-      <button type="button" /*onClick={handleLogout}*/>
+      <button type="button" onClick={handleLogout}>
         <span>Logout</span>
         <svg fill="white" viewBox="0 0 490.3 490.3" stroke="white">
           <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>

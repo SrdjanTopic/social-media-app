@@ -1,11 +1,11 @@
-import axios from "axios";
+import _axios from "./_axios";
 
-const url = "http://localhost:9000/postRatings";
+const url = import.meta.env.VITE_URL_BACK + "/postRatings";
 
 async function getIsLikedByMe(postId: number) {
   try {
-    const res = await axios.get(`${url}/${postId}`);
-    return res.data;
+    const res = await _axios.get(`${url}/${postId}`);
+    return res;
   } catch (ex) {
     throw new Error("error!");
   }
@@ -13,8 +13,8 @@ async function getIsLikedByMe(postId: number) {
 
 async function removeRating(postId: number) {
   try {
-    const res = await axios.delete(`${url}/${postId}`);
-    return res.data;
+    const res = await _axios.deleteReq(`${url}/${postId}`);
+    return res;
   } catch (ex) {
     throw new Error("error!");
   }
@@ -22,8 +22,8 @@ async function removeRating(postId: number) {
 
 async function addRating(postId: number, isLiked: boolean) {
   try {
-    const res = await axios.post(`${url}`, { postId, isLiked });
-    return res.data;
+    const res = await _axios.post(`${url}`, { postId, isLiked });
+    return res;
   } catch (ex) {
     throw new Error("error!");
   }
@@ -31,8 +31,8 @@ async function addRating(postId: number, isLiked: boolean) {
 
 async function updateRating(postId: number, isLiked: boolean) {
   try {
-    const res = await axios.put(`${url}`, { postId, isLiked });
-    return res.data;
+    const res = await _axios.put(`${url}`, { postId, isLiked });
+    return res;
   } catch (ex) {
     throw new Error("error!");
   }
