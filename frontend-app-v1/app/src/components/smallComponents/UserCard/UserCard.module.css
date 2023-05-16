@@ -1,0 +1,49 @@
+.userCard {
+  /* width: 90%; */
+  border-radius: 1rem;
+  background-color: hsl(0, 0%, 20%);
+  padding-bottom: 1rem;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.userCard img {
+  width: 12rem;
+  height: 12rem;
+}
+.userCard a {
+  font-size: 1.3rem;
+  text-decoration: none;
+  color: white;
+}
+
+.userCard a:hover {
+  text-decoration: underline;
+}
+
+.btnWrapper {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 1rem 0 1rem;
+}
+
+.btnWrapper button {
+  font-size: 1rem;
+  padding: 0.2rem 0.4rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  font-weight: bold;
+}
+.changePwModal {
+  z-index: 10;
+  margin-top: 10px;
+  background: green;
+  border: none;
+  border-radius: 1rem;
+}

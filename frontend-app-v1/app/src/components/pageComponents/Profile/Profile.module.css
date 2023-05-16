@@ -1,0 +1,217 @@
+:root {
+  --pictureDim: 10rem;
+}
+
+.wrapper {
+  width: 70%;
+}
+
+.mainInfoSection {
+  background-color: hsl(0, 0%, 20%);
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.imgWrapper {
+  position: relative;
+}
+
+.imgWrapper img {
+  border: 5px solid hsl(0, 0%, 15%);
+  height: var(--pictureDim);
+  width: var(--pictureDim);
+  border-radius: 50%;
+  scale: 1.5 1.5;
+}
+
+.imgWrapper label {
+  position: absolute;
+  z-index: 10;
+  bottom: -3rem;
+  left: -1rem;
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+  background-color: hsla(0, 0%, 25%);
+}
+
+.imgWrapper label:hover {
+  background-color: hsla(0, 0%, 40%);
+}
+
+.imgWrapper input {
+  display: none;
+}
+
+.checkMarks {
+  display: flex;
+  position: absolute;
+  gap: 0.2rem;
+  bottom: -3rem;
+  left: 50%;
+  translate: -50% 0;
+}
+.editCheckMarks {
+  display: flex;
+  gap: 0.2rem;
+}
+.checkMark {
+  background-color: hsla(0, 0%, 25%);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.checkMark:hover {
+  background-color: hsla(0, 0%, 40%);
+}
+.svgDiv {
+  position: relative;
+}
+.imgWrapper label:hover .tootip {
+  opacity: 1;
+}
+.svgDiv:hover .tootip {
+  opacity: 1;
+}
+
+.tootip {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 0;
+  cursor: default;
+  pointer-events: none;
+  color: hsl(0, 0%, 70%);
+  width: fit-content;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.namesWrap {
+  text-align: left;
+}
+
+.namesWrap div h1,
+h2 {
+  margin-left: 0.3rem;
+}
+
+.namesWrap div input {
+  font-weight: bold;
+  width: 15rem;
+  color: rgba(255, 255, 255, 0.87);
+  padding: 0 0.2rem;
+}
+
+.namesWrap div:nth-child(1) input {
+  font-size: 2em;
+}
+
+.namesWrap div:nth-child(2) input {
+  font-size: 1.5em;
+}
+
+.addFriendBtn {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: none;
+  font-weight: bold;
+  background-color: hsl(0, 0%, 40%);
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+.addFriendBtn:hover {
+  background-color: hsl(0, 0%, 50%);
+}
+
+.addFriendBtn:disabled {
+  background-color: hsl(0, 0%, 50%);
+  cursor: default;
+}
+
+.tabs {
+  padding: 1rem;
+  margin-left: calc(var(--pictureDim) + 1rem);
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.tab {
+  text-decoration: none;
+  padding: 0.5rem;
+  font-size: 1.3rem;
+  color: hsl(0, 0%, 80%);
+  border-radius: 0.5rem;
+}
+
+.tab:hover {
+  background-color: hsl(0, 0%, 25%);
+}
+
+.clickedTab {
+  background-color: hsl(0, 0%, 25%);
+}
+
+.btnWrapper {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+.btnWrapper button {
+  font-size: 1rem;
+  padding: 0.2rem 0.4rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  font-weight: bold;
+}
+
+.editProfileBtn {
+  position: relative;
+  border: none;
+  padding: 0.2rem;
+  background-color: transparent;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.editProfileBtn:hover {
+  background-color: hsla(0, 0%, 50%, 0.5);
+}
+.editProfileBtn:hover .tootip {
+  opacity: 1;
+}
+
+.changePwModal {
+  top: 30%;
+  left: 45%;
+  padding: 3rem;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 1rem;
+}
+
+.changePwModal[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.changePwModal input {
+  font-size: 1.5rem;
+}
+
+.changePwModal div {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.changePwModal button {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  padding: 0 0.5rem;
+}

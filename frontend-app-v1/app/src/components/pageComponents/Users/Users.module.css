@@ -1,0 +1,35 @@
+.inputsWrapper {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.inputsWrapper input {
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+
+.searchBtn {
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+.searchBtn:hover {
+  background-color: gray;
+}
+.searchBtn:disabled {
+  background-color: gray;
+  cursor: default;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: 1rem;
+  justify-items: center;
+}

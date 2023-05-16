@@ -1,0 +1,60 @@
+# An example controller showing a sample home page
+GET     /                                                 controllers.HomeController.index()
+
+# AUTH ROUTES
+GET     /auth                                             controllers.AuthController.isAuthenticated()
+POST    /auth/login                                       controllers.AuthController.login()
+
+# MY PROFILE ROUTES
+GET     /myProfile                                        controllers.UserController.myProfile()
+PUT     /myProfile/update                                 controllers.UserController.updateUserInfo()
+PUT     /myProfile/changePassword                         controllers.UserController.changePassword()
+
+# USER ROUTES
+GET     /users                                            controllers.FriendsController.getAllUsersThatAreNotFriends(username: Option[String], fullName: Option[String])
+GET     /users/:username                                  controllers.UserController.findByUsername(username: String)
+POST    /users                                            controllers.UserController.createUser()
+
+# FRIEND REQUEST ROUTES
+GET     /friendRequests                                   controllers.FriendRequestsController.getFriendRequestsForUser()
+GET     /friendRequests/count                             controllers.FriendRequestsController.getFriendRequestCount()
+GET     /friendRequests/amRequesting/:requesterId         controllers.FriendRequestsController.checkIfIAmRequesting(requesterId: Long)
+GET     /friendRequests/amRequested/:requesterId          controllers.FriendRequestsController.checkIfIAmRequested(requesterId: Long)
+POST    /friendRequests                                   controllers.FriendRequestsController.createFriendRequest()
+POST    /friendRequests/:requesterId                      controllers.FriendRequestsController.acceptFriendRequest(requesterId: Long)
+DELETE  /friendRequests/:requesterId                      controllers.FriendRequestsController.deleteFriendRequest(requesterId: Long)
+
+# FRIENDS ROUTES
+GET     /friends                                          controllers.FriendsController.getFriendsForCurrentUser()
+GET     /friends/areFriends/:friendId                     controllers.FriendsController.areFriends(friendId: Long)
+GET     /friends/:userId                                  controllers.FriendsController.getFriendsForUser(userId:Long)
+DELETE  /friends/:friendId                                controllers.FriendsController.unfriendUser(friendId: Long)
+
+# POST ROUTES
+POST    /posts                                            controllers.PostController.createPost()
+GET     /posts/isMyPost/:postId                           controllers.PostController.isMyPost(postId: Long)
+GET     /posts/fromFriends                                controllers.PostController.getAllFromFriends()
+GET     /posts/:userId                                    controllers.PostController.getAllForUser(userId: Long)
+PUT     /posts/:postId                                    controllers.PostController.updatePost(postId: Long)
+DELETE  /posts/:postId                                    controllers.PostController.deletePost(postId: Long)
+
+# POST RATING ROUTES
+GET     /postRatings                                      controllers.PostRatingController.getAllForUser()
+GET     /postRatings/:postId                              controllers.PostRatingController.getIsLikedByUser(postId: Long)
+POST    /postRatings                                      controllers.PostRatingController.addRating()
+PUT     /postRatings                                      controllers.PostRatingController.updateRating()
+DELETE  /postRatings/:postId                              controllers.PostRatingController.deleteRating(postId: Long)
+
+# COMMENT ROUTES
+GET     /comments/check/:commentId                        controllers.CommentController.checkIfMyComment(commentId: Long)
+GET     /comments/:postId                                 controllers.CommentController.getAllForPost(postId: Long)
+POST    /comments                                         controllers.CommentController.createComment()
+PUT     /comments/:commentId                              controllers.CommentController.updateComment(commentId: Long)
+DELETE  /comments/:commentId                              controllers.CommentController.deleteComment(commentId: Long)
+
+# IMG ROUTES
+GET     /img/user                                         controllers.ImageController.getProfilePicture()
+GET     /img/user/:username                               controllers.ImageController.getProfilePictureByUsername(username: String)
+POST    /img/user                                         controllers.ImageController.uploadProfilePicture()
+GET     /img/post/:postId                                 controllers.ImageController.getPostPicture(postId: Long)
+POST    /img/post/:postId                                 controllers.ImageController.uploadPostPicture(postId: Long)
