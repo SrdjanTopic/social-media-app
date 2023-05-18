@@ -6,7 +6,7 @@ import dto.friendRequest.CreateFriendRequestDTO
 import play.api.libs.json.Json
 import play.api.mvc.{BaseController, ControllerComponents}
 import services.FriendRequestsService
-import formats.jsonFormats.{returnUserWithoutImgFormat, createFriendRequestFormat}
+import formats.jsonFormats.{userDTOFormat, createFriendRequestFormat}
 
 import javax.inject.Singleton
 import scala.concurrent.ExecutionContext

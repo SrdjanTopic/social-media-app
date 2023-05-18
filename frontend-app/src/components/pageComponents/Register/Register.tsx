@@ -2,6 +2,7 @@ import { FormEvent, useRef } from "react";
 import styles from "./Register.module.css";
 import SuccessfulRegister from "../SuccessfulRegister/SuccessfulRegister";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../../shared/LoadingSpinner/LoadingSpinner";
 
 type RegisterProps = {
   submitFunction: (userCredentials: UserRegister) => void;
@@ -75,7 +76,7 @@ export default function Register({
         <br />
         <button>Register</button>
       </form>
-      {isRegistering && <div className={styles["lds-dual-ring"]}></div>}
+      {isRegistering && <LoadingSpinner />}
     </div>
   );
 }

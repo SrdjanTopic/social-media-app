@@ -11,7 +11,7 @@ async function register(registerCredentials: UserRegister) {
   }
 }
 
-async function getUserByUsername(username: string) {
+async function getUserByUsername(username: string): Promise<User> {
   try {
     const res = await _axios.get(`${url}/${username}`);
     return res;

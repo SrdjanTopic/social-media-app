@@ -25,18 +25,17 @@ object jsonFormats {
 
   //USER FORMATS
   implicit val userFormat = Json.format[User]
-  implicit val returnUserFormat = Json.format[UserDTO]
-  implicit val returnUserWithoutImgFormat = Json.format[UserDTO]
-  implicit val updateUserInfoFormat: Format[UpdateUserInfoDTO] = (
+  implicit val userDTOFormat = Json.format[UserDTO]
+  implicit val updateUserInfoDTOFormat: Format[UpdateUserInfoDTO] = (
     (JsPath \ "username").format[String](minLength[String](3).keepAnd(maxLength[String](30))) and
       (JsPath \ "fullName").format[String](minLength[String](5).keepAnd(maxLength[String](50)))
     )(UpdateUserInfoDTO.apply, unlift(UpdateUserInfoDTO.unapply))
-  implicit val createUserFormat : Format[CreateUserDTO] = (
+  implicit val createUserDTOFormat : Format[CreateUserDTO] = (
     (JsPath \ "username").format[String](minLength[String](3).keepAnd(maxLength[String](30))) and
       (JsPath \ "fullName").format[String](minLength[String](5).keepAnd(maxLength[String](50))) and
       (JsPath \ "password").format[String](minLength[String](6))
   )(CreateUserDTO.apply, unlift(CreateUserDTO.unapply))
-  implicit val changePasswordFormat: Format[ChangePasswordDTO] =
+  implicit val changePasswordDTOFormat: Format[ChangePasswordDTO] =
     (JsPath \ "newPassword")
       .format[String](pattern("""^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$""".r, "Password must have minimum 8 characters, at least one letter and one number"))
       .inmap(ChangePasswordDTO.apply, _.newPassword)

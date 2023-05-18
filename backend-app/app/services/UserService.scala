@@ -3,28 +3,29 @@ package services
 import com.google.inject.Inject
 import dto.user.{ChangePasswordDTO, CreateUserDTO, UpdateUserInfoDTO, UserDTO}
 import models.User
-import repositories.UserRepository
+import repositories.{FriendsRepository, UserRepository}
 
 import javax.inject.Singleton
 import scala.concurrent.{ExecutionContext, Future}
 @Singleton
-class UserService @Inject()(userRepository:UserRepository, passwordService: PasswordService)(implicit ec: ExecutionContext){
-
-  def getAll: Future[Seq[UserDTO]] = {
-    userRepository.getAll.map(users=> users.map(u=>UserDTO(u.id, u.username, u.fullName)))
-  }
-
-  def findById(userId: Long): Future[Option[UserDTO]] = {
+class UserService @Inject()(userRepository:UserRepository, passwordService: PasswordService, friendsRepository: FriendsRepository)(implicit ec: ExecutionContext){
+  def findById(userId: Long) = {
     userRepository.findById(userId).map {
       case Some(user) => Option(UserDTO(user.id, user.username, user.fullName))
       case None => None
     }
   }
 
-  def findByUsername(username: String): Future[Option[UserDTO]] = {
-    userRepository.findByUsername(username).map {
-      case Some(user) => Option(UserDTO(user.id, user.username, user.fullName))
-      case None => None
+
+  def findByUsername(username: String, myId:Long) = {
+    userRepository.findByUsername(username).flatMap {
+      case Some(user) =>
+        if(user.id==myId)
+          Future.successful(Option(UserDTO(user.id, user.username, user.fullName, None)))
+        else friendsRepository.areFriends(user.id, myId).map(isFriend=>
+          Option(UserDTO(user.id, user.username, user.fullName, Option(isFriend)))
+        )
+      case None => Future.successful(None)
     }
   }
 

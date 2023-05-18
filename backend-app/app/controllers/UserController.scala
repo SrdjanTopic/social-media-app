@@ -3,7 +3,7 @@ package controllers
 import actions.AuthenticatedAction
 import com.google.inject.Inject
 import dto.user.{ChangePasswordDTO, CreateUserDTO, UpdateUserInfoDTO}
-import formats.jsonFormats.{changePasswordFormat, createUserFormat, returnUserWithoutImgFormat, updateUserInfoFormat}
+import formats.jsonFormats.{changePasswordDTOFormat, createUserDTOFormat, updateUserInfoDTOFormat, userDTOFormat}
 import play.api.libs.json.{JsError, Json}
 import play.api.mvc._
 import services.UserService
@@ -12,12 +12,9 @@ import javax.inject.Singleton
 import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class UserController @Inject()(userService:UserService, authenticatedAction: AuthenticatedAction)(val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext) extends BaseController {
-  def getAll= Action.async {
-    userService.getAll.map(users => Ok(Json.toJson(users)))
-  }
 
-  def findByUsername(username: String) = Action.async {
-    userService.findByUsername(username).map {
+  def findByUsername(username: String) = authenticatedAction.async { request =>
+    userService.findByUsername(username, request.userId.toLong).map {
       case Some(u) => Ok(Json.toJson(u))
       case None => NotFound(s"User with the username ${username} does not exist")
     }

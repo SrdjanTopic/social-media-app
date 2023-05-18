@@ -10,7 +10,7 @@ export default function Sidebar() {
   }
   return (
     <nav className={styles.sidebar}>
-      <a className={styles.sidebarOptionWrapper} href={""}>
+      <a className={styles.sidebarOptionWrapper} href={"/"}>
         <div className={styles.svgDiv}>
           <svg viewBox="0 -20 300 300" fill="lightblue" strokeLinecap="round">
             <rect x="75" y="120" width="150" height="120" fill="lightblue" />

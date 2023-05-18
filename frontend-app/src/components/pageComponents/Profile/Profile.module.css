@@ -1,0 +1,172 @@
+:root {
+  --pictureDim: 10rem;
+}
+
+.wrapper {
+  width: 70%;
+}
+
+/* Main info wrapper */
+.mainInfoWrapper {
+  width: 100%;
+  background-color: var(--primary-background-color);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4rem;
+}
+
+/* Image wrapper */
+.imgWrapper {
+  position: relative;
+}
+
+.imgWrapper img {
+  border: 5px solid var(--main-background-color);
+  height: var(--pictureDim);
+  width: var(--pictureDim);
+  border-radius: 50%;
+  scale: 1.5 1.5;
+}
+
+.imgWrapper label {
+  position: absolute;
+  z-index: 10;
+  bottom: -3rem;
+  left: -1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  padding-bottom: 0.3rem;
+  border-radius: 50%;
+  background-color: hsla(0, 0%, 25%);
+}
+
+.imgWrapper label:hover {
+  background-color: hsla(0, 0%, 40%);
+}
+
+.imgWrapper input {
+  display: none;
+}
+.tootip {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 0;
+  cursor: default;
+  pointer-events: none;
+  color: hsl(0, 0%, 70%);
+  width: fit-content;
+  white-space: nowrap;
+  opacity: 0;
+}
+.checkMarks {
+  display: flex;
+  position: absolute;
+  gap: 0.2rem;
+  bottom: -3rem;
+  left: 50%;
+  translate: -50% 0;
+}
+.editCheckMarks {
+  display: flex;
+  gap: 0.2rem;
+}
+.checkMark {
+  background-color: hsla(0, 0%, 25%);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.checkMark:hover {
+  background-color: hsla(0, 0%, 40%);
+}
+.svgDiv {
+  position: relative;
+}
+.imgWrapper label:hover .tootip {
+  opacity: 1;
+}
+.svgDiv:hover .tootip {
+  opacity: 1;
+}
+
+/* Names wrapper */
+.namesWrapper {
+  position: relative;
+  text-align: left;
+  user-select: none;
+}
+.namesWrapper input {
+  width: 50%;
+  border: none;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  color: var(--primary-font-color);
+}
+.namesWrapper input:focus {
+  outline: none;
+}
+.namesWrapper input:disabled {
+  background-color: var(--primary-background-color);
+  user-select: none;
+  pointer-events: none;
+  color: var(--primary-font-color);
+}
+
+.namesWrapper input:nth-of-type(1) {
+  font-size: 2rem;
+}
+.namesWrapper input:nth-of-type(2) {
+  font-size: 1.5rem;
+  margin-top: 0.3rem;
+}
+
+.editUserInfoBtnWrapper {
+  position: absolute;
+  bottom: 0;
+  left: calc(50% + 0.5rem);
+}
+.editUserInfoBtn {
+  position: relative;
+  border: none;
+  padding: 0.2rem;
+  padding-bottom: 0;
+  background-color: transparent;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.editUserInfoBtn:hover {
+  background-color: hsla(0, 0%, 50%, 0.5);
+}
+.editUserInfoBtn:hover .tootip {
+  opacity: 1;
+}
+
+.editBtns {
+  position: absolute;
+  left: 0;
+  display: flex;
+  margin-top: 0.5rem;
+  gap: 1rem;
+  width: 50%;
+  justify-content: center;
+}
+
+.editBtns button {
+  padding: 0.1rem 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.2rem;
+  background-color: var(--button-color);
+}
+
+.editBtns button:hover {
+  background-color: var(--hover-button-color);
+}
+
+.editBtns button:nth-of-type(1) {
+  color: lightgreen;
+}
+.editBtns button:nth-of-type(2) {
+  color: lightcoral;
+}

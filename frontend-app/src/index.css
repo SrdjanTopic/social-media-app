@@ -7,11 +7,19 @@
 }
 
 :root {
+  /* COLORS */
+  --main-background-color: hsl(0, 0%, 10%);
+  --primary-background-color: hsl(0, 0%, 15%);
+  --secondary-background-color: hsl(0, 0%, 20%);
+  --primary-font-color: hsl(0, 0%, 90%);
+  --button-color: hsl(0, 0%, 25%);
+  --hover-button-color: hsl(0, 0%, 35%);
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: hsl(0, 0%, 14%);
+  color: var(--primary-font-color);
+  background-color: var(--main-background-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

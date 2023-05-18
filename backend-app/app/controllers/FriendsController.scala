@@ -2,7 +2,7 @@ package controllers
 
 import actions.AuthenticatedAction
 import com.google.inject.Inject
-import formats.jsonFormats.returnUserWithoutImgFormat
+import formats.jsonFormats.userDTOFormat
 import play.api.libs.json.Json
 import play.api.mvc._
 import services.FriendsService

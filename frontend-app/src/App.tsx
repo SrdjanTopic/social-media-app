@@ -7,6 +7,8 @@ import React from "react";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import LogoutPage from "./pages/fallbackPages/LogoutPage";
+import LoadingSpinner from "./components/shared/LoadingSpinner/LoadingSpinner";
+import ProfilePage from "./pages/ProfilePage";
 
 const routerLoggedIn = createBrowserRouter([
   {
@@ -22,6 +24,11 @@ const routerLoggedIn = createBrowserRouter([
   {
     path: "/login",
     element: <LogoutPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/profile/:username",
+    element: <ProfilePage />,
     errorElement: <ErrorPage />,
   },
 ]);
@@ -47,7 +54,7 @@ export const UserContext = React.createContext<User>({
 export default function App() {
   const currentUser = useCurrentUser();
   return typeof currentUser === "undefined" ? (
-    <h1>Loading</h1>
+    <LoadingSpinner />
   ) : currentUser !== null ? (
     <UserContext.Provider value={currentUser}>
       <div className="wrapper">

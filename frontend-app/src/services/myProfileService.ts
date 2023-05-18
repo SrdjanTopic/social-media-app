@@ -21,7 +21,6 @@ async function updateProfile(userCredentials: UpdateUser) {
 }
 
 async function changePassword(passwords: UpdatePassword) {
-  console.log(passwords);
   try {
     const res = await _axios.put(`${url}/changePassword`, passwords);
     return res;
