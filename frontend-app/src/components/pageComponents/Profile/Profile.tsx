@@ -4,12 +4,14 @@ import styles from "./Profile.module.css";
 import defaultPic from "../../../assets/defaultUserImg.jpg";
 import imageService from "../../../services/imageService";
 import myProfileService from "../../../services/myProfileService";
+import { getUserUpdateInfo } from "../../../utils/functions";
 
 type ProfileProps = {
   user: User;
+  setUser: (user: User) => void;
 };
 
-export default function Profile({ user }: ProfileProps) {
+export default function Profile({ user, setUser }: ProfileProps) {
   const [loadedPicture, setLoadedPicture] = useState<string | null>(null);
   const picture = useGetUserPicture(user.id);
 
@@ -37,25 +39,32 @@ export default function Profile({ user }: ProfileProps) {
   }
 
   function handleEditProfile() {
-    if (usernameRef.current && fullNameRef.current)
-      if (
-        usernameRef.current.value == user.username &&
-        fullNameRef.current.value == user.fullName
-      )
+    if (usernameRef.current && fullNameRef.current) {
+      const userInfo: UpdateUser = {
+        fullName: user.fullName,
+        username: user.username,
+      };
+      const updateInfo: UpdateUser = {
+        fullName: fullNameRef.current.value,
+        username: usernameRef.current.value,
+      };
+      const userUpdateInfo = getUserUpdateInfo(userInfo, updateInfo);
+      if (userUpdateInfo === null) {
+        setIsEditing(false);
         return;
-      else
+      } else
         myProfileService
-          .updateProfile({
-            fullName: fullNameRef.current.value,
-            username: usernameRef.current.value,
-          })
+          .updateProfile(userUpdateInfo)
           .then((res) => {
-            window.location.replace(
-              `http://127.0.0.1:5173/profile/${res.username}`
-            );
+            setUser({
+              ...user,
+              fullName: res.fullName ? res.fullName : user.fullName,
+              username: res.username ? res.username : user.username,
+            });
             setIsEditing(false);
           })
           .catch((err) => console.log(err));
+    }
   }
   return (
     <div className={styles.wrapper}>

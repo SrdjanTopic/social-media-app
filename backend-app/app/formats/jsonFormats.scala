@@ -26,10 +26,7 @@ object jsonFormats {
   //USER FORMATS
   implicit val userFormat = Json.format[User]
   implicit val userDTOFormat = Json.format[UserDTO]
-  implicit val updateUserInfoDTOFormat: Format[UpdateUserInfoDTO] = (
-    (JsPath \ "username").format[String](minLength[String](3).keepAnd(maxLength[String](30))) and
-      (JsPath \ "fullName").format[String](minLength[String](5).keepAnd(maxLength[String](50)))
-    )(UpdateUserInfoDTO.apply, unlift(UpdateUserInfoDTO.unapply))
+  implicit val updateUserInfoDTOFormat: Format[UpdateUserInfoDTO] = Json.format[UpdateUserInfoDTO]
   implicit val createUserDTOFormat : Format[CreateUserDTO] = (
     (JsPath \ "username").format[String](minLength[String](3).keepAnd(maxLength[String](30))) and
       (JsPath \ "fullName").format[String](minLength[String](5).keepAnd(maxLength[String](50))) and

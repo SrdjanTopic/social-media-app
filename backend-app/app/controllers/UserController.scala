@@ -13,6 +13,13 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class UserController @Inject()(userService:UserService, authenticatedAction: AuthenticatedAction)(val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext) extends BaseController {
 
+  def findById(userId: Long) = authenticatedAction.async { request =>
+    userService.findById(userId, request.userId.toLong).map {
+      case Some(u) => Ok(Json.toJson(u))
+      case None => NotFound(s"User with the id ${userId} does not exist")
+    }
+  }
+
   def findByUsername(username: String) = authenticatedAction.async { request =>
     userService.findByUsername(username, request.userId.toLong).map {
       case Some(u) => Ok(Json.toJson(u))
@@ -21,7 +28,7 @@ class UserController @Inject()(userService:UserService, authenticatedAction: Aut
   }
 
   def myProfile() = authenticatedAction.async { request =>
-    userService.findById(request.userId.toLong).map {
+    userService.findById(request.userId.toLong, request.userId.toLong).map {
       case Some(u) => Ok(Json.toJson(u))
       case None => Conflict("Error occurred")
     }

@@ -11,7 +11,7 @@ PUT     /myProfile/update                                 controllers.UserContro
 PUT     /myProfile/changePassword                         controllers.UserController.changePassword()
 
 # USER ROUTES
-GET     /users/:username                                  controllers.UserController.findByUsername(username: String)
+GET     /users/:userId                                    controllers.UserController.findById(userId: Long)
 POST    /users                                            controllers.UserController.createUser()
 
 # FRIEND REQUEST ROUTES

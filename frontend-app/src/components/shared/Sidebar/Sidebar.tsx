@@ -28,7 +28,7 @@ export default function Sidebar() {
       </a>
       <a
         className={styles.sidebarOptionWrapper}
-        href={`/profile/${currentUser.username}`}
+        href={`/profile/${currentUser.id}`}
       >
         <div className={styles.svgDiv}>
           <svg

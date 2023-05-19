@@ -9,10 +9,15 @@ import javax.inject.Singleton
 import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class UserService @Inject()(userRepository:UserRepository, passwordService: PasswordService, friendsRepository: FriendsRepository)(implicit ec: ExecutionContext){
-  def findById(userId: Long) = {
-    userRepository.findById(userId).map {
-      case Some(user) => Option(UserDTO(user.id, user.username, user.fullName))
-      case None => None
+  def findById(userId: Long, myId:Long) = {
+    userRepository.findById(userId).flatMap {
+      case Some(user) =>
+        if (user.id == myId)
+          Future.successful(Option(UserDTO(user.id, user.username, user.fullName, None)))
+        else friendsRepository.areFriends(user.id, myId).map(isFriend =>
+          Option(UserDTO(user.id, user.username, user.fullName, Option(isFriend)))
+        )
+      case None => Future.successful(None)
     }
   }
 
@@ -46,9 +51,13 @@ class UserService @Inject()(userRepository:UserRepository, passwordService: Pass
   def updateUserInfo(userId:Long, userInfo: UpdateUserInfoDTO) = {
     userRepository.existsById(userId).flatMap {
       case true =>
-        userRepository.existsByUsername(userInfo.username).flatMap {
-          case false => userRepository.updateUserInfo(userId, userInfo).map(res => Right(userInfo))
-          case true => Future.successful(Left(s"User with username: '${userInfo.username}' already exists!"))
+        userInfo.username match {
+          case Some(username) =>
+            userRepository.existsByUsername(username).flatMap {
+              case false => userRepository.updateUserInfo(userId, userInfo).map(_ => Right(userInfo))
+              case true => Future.successful(Left(s"User with username: '${userInfo.username}' already exists!"))
+          }
+          case None => userRepository.updateUserInfo(userId, userInfo).map(_ => Right(userInfo))
         }
       case false => Future.successful(Left(s"User with ID:'${userId}' does not exist!"))
     }

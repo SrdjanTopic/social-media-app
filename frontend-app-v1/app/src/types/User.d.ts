@@ -3,4 +3,6 @@ type User = {
   username: string;
   fullName: string;
   isFriend?: boolean;
+  amRequesting?: boolean;
+  amRequested?: boolean;
 };

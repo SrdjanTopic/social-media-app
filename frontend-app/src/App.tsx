@@ -27,7 +27,7 @@ const routerLoggedIn = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/profile/:username",
+    path: "/profile/:userId",
     element: <ProfilePage />,
     errorElement: <ErrorPage />,
   },

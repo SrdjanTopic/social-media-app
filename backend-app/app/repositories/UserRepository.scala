@@ -40,9 +40,19 @@ class UserRepository @Inject()()(implicit ec: ExecutionContext){
 
   def updateUserInfo(userId:Long, userInfo: UpdateUserInfoDTO): Future[Int] = {
     val query = SlickTables.userTable
-      .filter(_.id===userId).map(user=>(user.username, user.fullName))
-      .update(userInfo.username, userInfo.fullName)
-    db.run(query)
+      .filter(_.id===userId)
+      userInfo.username match {
+        case Some(username) =>
+          userInfo.fullName match {
+            case Some(fullName) => db.run(query.map(user => (user.username, user.fullName)).update(username, fullName))
+            case None => db.run(query.map(_.username).update(username))
+          }
+        case None =>
+          userInfo.fullName match {
+            case Some(fullName) => db.run(query.map(_.fullName).update(fullName))
+            case None => Future.successful(0)
+        }
+      }
   }
 
   def changePassword(userId:Long, password: String): Future[Int] = {

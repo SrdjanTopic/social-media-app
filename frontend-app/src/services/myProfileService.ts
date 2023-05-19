@@ -11,7 +11,7 @@ async function getCurrentUser(): Promise<User | null> {
   }
 }
 
-async function updateProfile(userCredentials: UpdateUser) {
+async function updateProfile(userCredentials: UpdateUser): Promise<UpdateUser> {
   try {
     const res = await _axios.put(`${url}/update`, userCredentials);
     return res;

@@ -1,6 +1,6 @@
 package dto.user
 
 case class UpdateUserInfoDTO(
-                              username: String,
-                              fullName: String,
+                              username: Option[String],
+                              fullName: Option[String],
                             )

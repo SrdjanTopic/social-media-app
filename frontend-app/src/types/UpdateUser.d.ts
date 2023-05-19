@@ -1,4 +1,4 @@
 type UpdateUser = {
-  username: string;
-  fullName: string;
+  username?: string;
+  fullName?: string;
 };

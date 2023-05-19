@@ -30,3 +30,17 @@ export function getDateDiffString(date2: Date, date1: Date) {
   if (minDiff > 0) return `${minDiff} minute${minDiff == 1 ? "" : "s"} ago`;
   else return `now`;
 }
+
+export function getUserUpdateInfo(user: UpdateUser, updateInfo: UpdateUser) {
+  if (
+    updateInfo.username == user.username &&
+    updateInfo.fullName == user.fullName
+  ) {
+    return null;
+  } else
+    return {
+      fullName: updateInfo.fullName,
+      username:
+        updateInfo.username == user.username ? undefined : updateInfo.username,
+    };
+}

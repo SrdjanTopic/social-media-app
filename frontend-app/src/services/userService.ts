@@ -11,12 +11,12 @@ async function register(registerCredentials: UserRegister) {
   }
 }
 
-async function getUserByUsername(username: string): Promise<User> {
+async function getUserById(userId: number): Promise<User> {
   try {
-    const res = await _axios.get(`${url}/${username}`);
+    const res = await _axios.get(`${url}/${userId}`);
     return res;
   } catch (ex) {
-    throw new Error("Username already taken!");
+    throw new Error("User does not exist");
   }
 }
 
@@ -36,7 +36,7 @@ async function getNonFriends(username: string | null, fullName: string | null) {
 
 const userService = {
   register,
-  getUserByUsername,
+  getUserById,
   getNonFriends,
 };
 
