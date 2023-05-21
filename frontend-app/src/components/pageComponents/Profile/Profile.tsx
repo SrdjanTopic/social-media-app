@@ -5,6 +5,8 @@ import defaultPic from "../../../assets/defaultUserImg.jpg";
 import imageService from "../../../services/imageService";
 import myProfileService from "../../../services/myProfileService";
 import { getUserUpdateInfo } from "../../../utils/functions";
+import friendService from "../../../services/friendService";
+import friendRequestService from "../../../services/friendRequestService";
 
 type ProfileProps = {
   user: User;
@@ -66,6 +68,51 @@ export default function Profile({ user, setUser }: ProfileProps) {
           .catch((err) => console.log(err));
     }
   }
+
+  function userAction(userId: number, userAction: UserActions) {
+    if (userAction.action == "unfriend") {
+      friendService
+        .unfriendUser(userId)
+        .then((res) => {
+          if (res !== 0) setUser({ ...user, isFriend: false });
+        })
+        .catch((err) => console.log(err));
+    }
+    if (userAction.action == "cancelRequest") {
+      friendRequestService
+        .deleteRequest(userId)
+        .then((res) => {
+          if (res !== 0) setUser({ ...user, amRequesting: false });
+        })
+        .catch((err) => console.log(err));
+    }
+    if (userAction.action == "acceptRequest") {
+      friendRequestService
+        .acceptRequest(userId)
+        .then((res) => {
+          if (res !== 0)
+            setUser({ ...user, amRequested: false, isFriend: true });
+        })
+        .catch((err) => console.log(err));
+    }
+    if (userAction.action == "rejectRequest") {
+      friendRequestService
+        .deleteRequest(userId)
+        .then((res) => {
+          if (res !== 0) setUser({ ...user, amRequested: false });
+        })
+        .catch((err) => console.log(err));
+    }
+    if (userAction.action == "requestFriendship") {
+      friendRequestService
+        .sendFriendRequest(userId)
+        .then((res) => {
+          if (res !== 0) setUser({ ...user, amRequesting: true });
+        })
+        .catch((err) => console.log(err));
+    }
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.mainInfoWrapper}>
@@ -193,6 +240,56 @@ export default function Profile({ user, setUser }: ProfileProps) {
             </>
           )}
         </div>
+        {user.isFriend !== undefined && (
+          <div className={styles.userActionsWrapper}>
+            {user.isFriend ? (
+              <button
+                onClick={() => userAction(user.id, { action: "unfriend" })}
+              >
+                Friends
+              </button>
+            ) : (
+              <>
+                {user.amRequesting && (
+                  <button
+                    onClick={() =>
+                      userAction(user.id, { action: "cancelRequest" })
+                    }
+                  >
+                    Requested
+                  </button>
+                )}
+                {user.amRequested && (
+                  <>
+                    <button
+                      onClick={() =>
+                        userAction(user.id, { action: "acceptRequest" })
+                      }
+                    >
+                      Accept Request
+                    </button>
+                    <button
+                      onClick={() =>
+                        userAction(user.id, { action: "rejectRequest" })
+                      }
+                    >
+                      Reject Request
+                    </button>
+                  </>
+                )}
+                {!user.amRequesting && !user.amRequested && (
+                  <button
+                    onClick={() =>
+                      userAction(user.id, { action: "requestFriendship" })
+                    }
+                  >
+                    Send Request
+                  </button>
+                )}
+              </>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -53,7 +53,7 @@ DELETE  /comments/:commentId                              controllers.CommentCon
 
 # IMG ROUTES
 GET     /img/user                                         controllers.ImageController.getProfilePicture()
-GET     /img/user/:username                               controllers.ImageController.getProfilePictureByUsername(username: String)
+GET     /img/user/:userId                                 controllers.ImageController.getProfilePictureByUserId(userId: Long)
 POST    /img/user                                         controllers.ImageController.uploadProfilePicture()
 GET     /img/post/:postId                                 controllers.ImageController.getPostPicture(postId: Long)
 POST    /img/post/:postId                                 controllers.ImageController.uploadPostPicture(postId: Long)

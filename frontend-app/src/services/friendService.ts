@@ -29,7 +29,7 @@ async function getFriendsForUser(userId: number) {
   }
 }
 
-async function unfriendUser(userId: number) {
+async function unfriendUser(userId: number): Promise<number> {
   try {
     const res = await _axios.deleteReq(`${url}/${userId}`);
     return res;

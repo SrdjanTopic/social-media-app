@@ -42,7 +42,9 @@ class FriendRequestsRepository @Inject()()(implicit ec: ExecutionContext){
 
   def deleteFriendRequest(requestInfo: FriendRequest) = {
     db.run(SlickTables.friendRequestTable
-      .filter(request => request.requesterId === requestInfo.requesterId && request.addresseeId === requestInfo.addresseeId)
+      .filter(request => (request.requesterId === requestInfo.requesterId && request.addresseeId === requestInfo.addresseeId)
+        ||
+        (request.requesterId === requestInfo.addresseeId && request.addresseeId === requestInfo.requesterId))
       .delete)
   }
 }

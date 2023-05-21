@@ -3,20 +3,27 @@ package services
 import com.google.inject.Inject
 import dto.user.{ChangePasswordDTO, CreateUserDTO, UpdateUserInfoDTO, UserDTO}
 import models.User
-import repositories.{FriendsRepository, UserRepository}
+import repositories.{FriendRequestsRepository, FriendsRepository, UserRepository}
 
 import javax.inject.Singleton
 import scala.concurrent.{ExecutionContext, Future}
 @Singleton
-class UserService @Inject()(userRepository:UserRepository, passwordService: PasswordService, friendsRepository: FriendsRepository)(implicit ec: ExecutionContext){
+class UserService @Inject()(userRepository:UserRepository, passwordService: PasswordService, friendsRepository: FriendsRepository, friendRequestsRepository: FriendRequestsRepository)(implicit ec: ExecutionContext){
   def findById(userId: Long, myId:Long) = {
     userRepository.findById(userId).flatMap {
       case Some(user) =>
         if (user.id == myId)
-          Future.successful(Option(UserDTO(user.id, user.username, user.fullName, None)))
-        else friendsRepository.areFriends(user.id, myId).map(isFriend =>
-          Option(UserDTO(user.id, user.username, user.fullName, Option(isFriend)))
-        )
+          Future.successful(Option(UserDTO(user.id, user.username, user.fullName)))
+        else
+          friendsRepository.areFriends(user.id, myId).flatMap {
+            case true => Future.successful(Option(UserDTO(user.id, user.username, user.fullName, None, None, Option(true))))
+            case false =>
+              friendRequestsRepository.exists(userId,myId).flatMap(amRequesting =>
+                friendRequestsRepository.exists(myId, userId).map(amRequested =>
+                  Option(UserDTO(user.id, user.username, user.fullName, Option(amRequesting), Option(amRequested), Option(false)))
+                )
+              )
+          }
       case None => Future.successful(None)
     }
   }
@@ -26,7 +33,7 @@ class UserService @Inject()(userRepository:UserRepository, passwordService: Pass
     userRepository.findByUsername(username).flatMap {
       case Some(user) =>
         if(user.id==myId)
-          Future.successful(Option(UserDTO(user.id, user.username, user.fullName, None)))
+          Future.successful(Option(UserDTO(user.id, user.username, user.fullName)))
         else friendsRepository.areFriends(user.id, myId).map(isFriend=>
           Option(UserDTO(user.id, user.username, user.fullName, Option(isFriend)))
         )

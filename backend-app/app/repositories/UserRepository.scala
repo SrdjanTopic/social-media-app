@@ -28,7 +28,7 @@ class UserRepository @Inject()()(implicit ec: ExecutionContext){
     db.run(SlickTables.userTable.filter(_.username===username).take(1).result.headOption)
   }
 
-  def findById(userId: Long): Future[Option[User]] = {
+  def findById(userId: Long) = {
     db.run(SlickTables.userTable.filter(_.id===userId).take(1).result.headOption)
   }
 

@@ -32,7 +32,7 @@ class ImageController @Inject()(authenticatedAction: AuthenticatedAction)(val co
         .as("application/octet-stream"))
   }
 
-  def getProfilePictureByUsername(userId:String) = authenticatedAction.async {
+  def getProfilePictureByUserId(userId:Long) = authenticatedAction.async {
     val profilePicturePath = Paths.get(s"C:\\Users\\Srdjan Topic\\Desktop\\MY PROJECTS\\praksa-NovaLite\\social-media-app\\backend-app\\images\\profilePictures\\$userId.png")
     val profilePictureBytes = Files.readAllBytes(profilePicturePath)
     val imgStr = Base64.getEncoder.encodeToString(ByteString(profilePictureBytes).toArray)

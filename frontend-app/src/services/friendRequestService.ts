@@ -38,7 +38,7 @@ async function amRequested(requesterId: number) {
   }
 }
 
-async function sendFriendRequest(addresseeId: number) {
+async function sendFriendRequest(addresseeId: number): Promise<number> {
   try {
     const res = await _axios.post(`${url}`, { addresseeId });
     return res;
@@ -47,7 +47,7 @@ async function sendFriendRequest(addresseeId: number) {
   }
 }
 
-async function acceptRequest(requesterId: number) {
+async function acceptRequest(requesterId: number): Promise<number> {
   try {
     const res = await _axios.post(`${url}/${requesterId}`, {});
     return res;
@@ -56,7 +56,7 @@ async function acceptRequest(requesterId: number) {
   }
 }
 
-async function deleteRequest(requesterId: number) {
+async function deleteRequest(requesterId: number): Promise<number> {
   try {
     const res = await _axios.deleteReq(`${url}/${requesterId}`);
     return res;

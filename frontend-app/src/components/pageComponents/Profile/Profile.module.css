@@ -13,7 +13,6 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 4rem;
 }
 
 /* Image wrapper */
@@ -94,6 +93,7 @@
   position: relative;
   text-align: left;
   user-select: none;
+  margin-left: 4rem;
 }
 .namesWrapper input {
   width: 50%;
@@ -116,7 +116,7 @@
   font-size: 2rem;
 }
 .namesWrapper input:nth-of-type(2) {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin-top: 0.3rem;
 }
 
@@ -169,4 +169,16 @@
 }
 .editBtns button:nth-of-type(2) {
   color: lightcoral;
+}
+
+.userActionsWrapper button {
+  background-color: var(--button-color);
+  border: none;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  font-size: 1rem;
+}
+.userActionsWrapper button:hover {
+  background-color: var(--hover-button-color);
 }

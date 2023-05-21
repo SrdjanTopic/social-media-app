@@ -35,14 +35,14 @@ class FriendRequestsController  @Inject()(friendRequestsService: FriendRequestsS
     val requestInfo = request.body
     friendRequestsService.createFriendRequest(requesterId, requestInfo.addresseeId).map {
       case Left(errorMessage) => Conflict(Json.obj("message" -> errorMessage))
-      case Right(_) => Created(Json.obj("message" -> "request created"))
+      case Right(res) => Created(Json.toJson(res))
     }
   })
 
   def acceptFriendRequest(requesterId: Long) = authenticatedAction.async(request => {
     val addresseeId = request.userId.toLong
 
-    friendRequestsService.acceptFriendRequest(requesterId, addresseeId).map(res => Ok(Json.toJson(res.toLong)))
+    friendRequestsService.acceptFriendRequest(requesterId, addresseeId).map(res => Ok(Json.toJson(res)))
   })
 
   def deleteFriendRequest(requesterId: Long) = authenticatedAction.async(request => {
