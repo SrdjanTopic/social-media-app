@@ -2,7 +2,7 @@ import _axios from "./_axios";
 
 const url = import.meta.env.VITE_URL_BACK + "/posts";
 
-async function getFriendPosts() {
+async function getFriendPosts(): Promise<Post[]> {
   try {
     const res = await _axios.get(`${url}/fromFriends`);
     return res;
@@ -11,7 +11,7 @@ async function getFriendPosts() {
   }
 }
 
-async function getUserPosts(userID: number) {
+async function getUserPosts(userID: number): Promise<Post[]> {
   try {
     const res = await _axios.get(`${url}/${userID}`);
     return res;

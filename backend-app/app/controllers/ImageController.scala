@@ -34,10 +34,14 @@ class ImageController @Inject()(authenticatedAction: AuthenticatedAction)(val co
 
   def getProfilePictureByUserId(userId:Long) = authenticatedAction.async {
     val profilePicturePath = Paths.get(s"C:\\Users\\Srdjan Topic\\Desktop\\MY PROJECTS\\praksa-NovaLite\\social-media-app\\backend-app\\images\\profilePictures\\$userId.png")
-    val profilePictureBytes = Files.readAllBytes(profilePicturePath)
-    val imgStr = Base64.getEncoder.encodeToString(ByteString(profilePictureBytes).toArray)
-    Future.successful(Ok.chunked(Source.fromIterator(() => imgStr.getBytes("UTF-8").grouped(1024)))
-      .as("application/octet-stream"))
+    Files.exists(profilePicturePath) match {
+      case true => val profilePictureBytes = Files.readAllBytes(profilePicturePath)
+        val imgStr = Base64.getEncoder.encodeToString(ByteString(profilePictureBytes).toArray)
+        Future.successful(Ok.chunked(Source.fromIterator(() => imgStr.getBytes("UTF-8").grouped(1024)))
+          .as("application/octet-stream"))
+      case false => Future.successful(Ok(Json.toJson(None)))
+    }
+
   }
 
   def uploadProfilePicture() = authenticatedAction.async(parse.json[ImageDTO]) { request =>
@@ -53,10 +57,13 @@ class ImageController @Inject()(authenticatedAction: AuthenticatedAction)(val co
 
   def getPostPicture(postId:Long) = authenticatedAction.async {
     val profilePicturePath = Paths.get(s"C:\\Users\\Srdjan Topic\\Desktop\\MY PROJECTS\\praksa-NovaLite\\social-media-app\\backend-app\\images\\postPictures\\$postId.png")
-    val profilePictureBytes = Files.readAllBytes(profilePicturePath)
-    val imgStr = Base64.getEncoder.encodeToString(ByteString(profilePictureBytes).toArray)
-    Future.successful(Ok.chunked(Source.fromIterator(() => imgStr.getBytes("UTF-8").grouped(1024)))
-      .as("application/octet-stream"))
+    Files.exists(profilePicturePath) match {
+      case true => val profilePictureBytes = Files.readAllBytes(profilePicturePath)
+        val imgStr = Base64.getEncoder.encodeToString(ByteString(profilePictureBytes).toArray)
+        Future.successful(Ok.chunked(Source.fromIterator(() => imgStr.getBytes("UTF-8").grouped(1024)))
+          .as("application/octet-stream"))
+      case false => Future.successful(Ok(Json.toJson(None)))
+    }
   }
 
   def uploadPostPicture(postId:Long) = authenticatedAction.async(parse.json[ImageDTO]) { request =>

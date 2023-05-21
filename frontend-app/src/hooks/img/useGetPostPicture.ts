@@ -7,11 +7,13 @@ export default function useGetPostPicture(postId: number) {
   useEffect(() => {
     imageService
       .getPostPicture(postId)
-      .then((pictureString) =>
-        setPicture(`data:image/png;base64,${pictureString}`)
-      )
+      .then((pictureString) => {
+        if (pictureString !== null)
+          setPicture(`data:image/png;base64,${pictureString}`);
+        else setPicture(null);
+      })
       .catch((err) => console.log(err));
-  }, []);
+  }, [postId]);
 
   return picture;
 }

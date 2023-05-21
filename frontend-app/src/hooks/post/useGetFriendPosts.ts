@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import postService from "../../services/postService";
 
-export default function useGetFriendPosts() {
+export default function useGetFriendPosts(): CustomStateHook<Post[]> {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
@@ -11,5 +11,5 @@ export default function useGetFriendPosts() {
       .catch((err) => console.log(err));
   }, []);
 
-  return posts;
+  return [posts, setPosts];
 }

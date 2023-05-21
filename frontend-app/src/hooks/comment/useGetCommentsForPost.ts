@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import commentService from "../../services/commentsService";
 
-type CustomStateHook = [
-  CommentWithUser[],
-  (newState: CommentWithUser[]) => void
-];
-
-export default function useGetCommentsForPost(postId: number): CustomStateHook {
+export default function useGetCommentsForPost(
+  postId: number
+): CustomStateHook<CommentWithUser[]> {
   const [comments, setComments] = useState<CommentWithUser[]>([]);
 
   useEffect(() => {
@@ -16,9 +13,5 @@ export default function useGetCommentsForPost(postId: number): CustomStateHook {
       .catch((err) => console.log(err));
   }, [postId]);
 
-  const customSetState = (newState: CommentWithUser[]) => {
-    setComments(newState);
-  };
-
-  return [comments, customSetState];
+  return [comments, setComments];
 }

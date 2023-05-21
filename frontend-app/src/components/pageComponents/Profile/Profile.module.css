@@ -13,6 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  border-radius: 1rem;
 }
 
 /* Image wrapper */
@@ -171,13 +172,23 @@
   color: lightcoral;
 }
 
+.userActionsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-right: 1rem;
+}
 .userActionsWrapper button {
   background-color: var(--button-color);
   border: none;
   border-radius: 0.2rem;
   cursor: pointer;
-  padding: 0.2rem 0.5rem;
+  padding: 0.5rem 0.8rem;
   font-size: 1rem;
+  word-wrap: normal;
+  white-space: nowrap;
 }
 .userActionsWrapper button:hover {
   background-color: var(--hover-button-color);

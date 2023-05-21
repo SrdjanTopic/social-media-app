@@ -9,11 +9,12 @@ import RegisterPage from "./pages/RegisterPage";
 import LogoutPage from "./pages/fallbackPages/LogoutPage";
 import LoadingSpinner from "./components/shared/LoadingSpinner/LoadingSpinner";
 import ProfilePage from "./pages/ProfilePage";
+import HomePage from "./pages/HomePage";
 
 const routerLoggedIn = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello world!</div>,
+    element: <HomePage />,
     errorElement: <ErrorPage />,
   },
   {

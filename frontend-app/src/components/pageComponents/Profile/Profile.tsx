@@ -70,46 +70,53 @@ export default function Profile({ user, setUser }: ProfileProps) {
   }
 
   function userAction(userId: number, userAction: UserActions) {
-    if (userAction.action == "unfriend") {
-      friendService
-        .unfriendUser(userId)
-        .then((res) => {
-          if (res !== 0) setUser({ ...user, isFriend: false });
-        })
-        .catch((err) => console.log(err));
-    }
-    if (userAction.action == "cancelRequest") {
-      friendRequestService
-        .deleteRequest(userId)
-        .then((res) => {
-          if (res !== 0) setUser({ ...user, amRequesting: false });
-        })
-        .catch((err) => console.log(err));
-    }
-    if (userAction.action == "acceptRequest") {
-      friendRequestService
-        .acceptRequest(userId)
-        .then((res) => {
-          if (res !== 0)
-            setUser({ ...user, amRequested: false, isFriend: true });
-        })
-        .catch((err) => console.log(err));
-    }
-    if (userAction.action == "rejectRequest") {
-      friendRequestService
-        .deleteRequest(userId)
-        .then((res) => {
-          if (res !== 0) setUser({ ...user, amRequested: false });
-        })
-        .catch((err) => console.log(err));
-    }
-    if (userAction.action == "requestFriendship") {
-      friendRequestService
-        .sendFriendRequest(userId)
-        .then((res) => {
-          if (res !== 0) setUser({ ...user, amRequesting: true });
-        })
-        .catch((err) => console.log(err));
+    switch (userAction.action) {
+      case "unfriend": {
+        friendService
+          .unfriendUser(userId)
+          .then((res) => {
+            if (res !== 0) setUser({ ...user, isFriend: false });
+          })
+          .catch((err) => console.log(err));
+        break;
+      }
+      case "cancelRequest": {
+        friendRequestService
+          .deleteRequest(userId)
+          .then((res) => {
+            if (res !== 0) setUser({ ...user, amRequesting: false });
+          })
+          .catch((err) => console.log(err));
+        break;
+      }
+      case "acceptRequest": {
+        friendRequestService
+          .acceptRequest(userId)
+          .then((res) => {
+            if (res !== 0)
+              setUser({ ...user, amRequested: false, isFriend: true });
+          })
+          .catch((err) => console.log(err));
+        break;
+      }
+      case "rejectRequest": {
+        friendRequestService
+          .deleteRequest(userId)
+          .then((res) => {
+            if (res !== 0) setUser({ ...user, amRequested: false });
+          })
+          .catch((err) => console.log(err));
+        break;
+      }
+      case "requestFriendship": {
+        friendRequestService
+          .sendFriendRequest(userId)
+          .then((res) => {
+            if (res !== 0) setUser({ ...user, amRequesting: true });
+          })
+          .catch((err) => console.log(err));
+        break;
+      }
     }
   }
 

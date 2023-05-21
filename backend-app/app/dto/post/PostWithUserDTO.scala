@@ -9,5 +9,6 @@ case class PostWithUserDTO(
                             likeCount: Long,
                             dislikeCount: Long,
                             username:String,
-                            fullName:String 
+                            fullName:String ,
+                            isLiked:Option[Boolean]
                           )
