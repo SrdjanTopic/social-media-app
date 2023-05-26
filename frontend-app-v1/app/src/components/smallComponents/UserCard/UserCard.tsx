@@ -20,7 +20,7 @@ export default function UserCard({ user, userAction }: UserCardProps) {
       <div className={styles.userCard}>
         <img src={profilePic ? profilePic : defaultPic} alt="User Profile" />
         <div>
-          <a href={`/profile/${user.username}`}>{user.fullName}</a>
+          <Link to={`/profile/${user.username}`}>{user.fullName}</Link>
           <h4>({user.username})</h4>
         </div>
 

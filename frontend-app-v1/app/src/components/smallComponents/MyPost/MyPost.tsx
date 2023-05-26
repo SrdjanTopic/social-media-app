@@ -128,9 +128,9 @@ export default function MyPost({
   return (
     <div className={styles.card}>
       <div className={styles.headingWrapper}>
-        <a href={`/profile/${user.username}`} className={styles.user}>
+        <Link to={`/profile/${user.username}`} className={styles.user}>
           {user.fullName}
-        </a>
+        </Link>
         {user.username === currentUser?.username && (
           <div>
             {/* <button

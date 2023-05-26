@@ -2,6 +2,7 @@ import { useContext } from "react";
 import styles from "./Sidebar.module.css";
 import { UserContext } from "../../../App";
 import authService from "../../../services/authService";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   const currentUser = useContext(UserContext);
@@ -10,7 +11,7 @@ export default function Sidebar() {
   }
   return (
     <nav className={styles.sidebar}>
-      <a className={styles.sidebarOptionWrapper} href={"/"}>
+      <Link className={styles.sidebarOptionWrapper} to={"/"}>
         <div className={styles.svgDiv}>
           <svg viewBox="0 -20 300 300" fill="lightblue" strokeLinecap="round">
             <rect x="75" y="120" width="150" height="120" fill="lightblue" />
@@ -25,10 +26,10 @@ export default function Sidebar() {
           </svg>
         </div>
         <span>Home</span>
-      </a>
-      <a
+      </Link>
+      <Link
         className={styles.sidebarOptionWrapper}
-        href={`/profile/${currentUser.id}`}
+        to={`/profile/${currentUser.id}`}
       >
         <div className={styles.svgDiv}>
           <svg
@@ -42,16 +43,16 @@ export default function Sidebar() {
           </svg>
         </div>
         <span>{currentUser.fullName}</span>
-      </a>
-      <a className={styles.sidebarOptionWrapper} href={"friends"}>
+      </Link>
+      <Link className={styles.sidebarOptionWrapper} to={"friends"}>
         <div className={styles.svgDiv}>
           <svg viewBox="0 0 1280 1024" fill="lightblue">
             <path d="M384 512c123.8 0 224-100.2 224-224S507.8 64 384 64 160 164.2 160 288s100.2 224 224 224z m153.6 64h-16.6c-41.6 20-87.8 32-137 32s-95.2-12-137-32h-16.6C103.2 576 0 679.2 0 806.4V864c0 53 43 96 96 96h576c53 0 96-43 96-96v-57.6c0-127.2-103.2-230.4-230.4-230.4zM960 512c106 0 192-86 192-192s-86-192-192-192-192 86-192 192 86 192 192 192z m96 64h-7.6c-27.8 9.6-57.2 16-88.4 16s-60.6-6.4-88.4-16H864c-40.8 0-78.4 11.8-111.4 30.8 48.8 52.6 79.4 122.4 79.4 199.6v76.8c0 4.4-1 8.6-1.2 12.8H1184c53 0 96-43 96-96 0-123.8-100.2-224-224-224z" />
           </svg>
         </div>
         <span>Friends</span>
-      </a>
-      <a className={styles.sidebarOptionWrapper} href={"friendRequests"}>
+      </Link>
+      <Link className={styles.sidebarOptionWrapper} to={"friendRequests"}>
         <div className={styles.svgDiv}>
           <svg viewBox="-200 0 1280 1024" fill="lightblue">
             <path d="M384 512c123.8 0 224-100.2 224-224S507.8 64 384 64 160 164.2 160 288s100.2 224 224 224z m153.6 64h-16.6c-41.6 20-87.8 32-137 32s-95.2-12-137-32h-16.6C103.2 576 0 679.2 0 806.4V864c0 53 43 96 96 96h576c53 0 96-43 96-96v-57.6c0-127.2-103.2-230.4-230.4-230.4zM960 512c106" />
@@ -74,14 +75,14 @@ export default function Sidebar() {
               strokeWidth={100}
               strokeLinecap="round"
             />
-            {/* hrefDO {friendRequestCount > 0 && (
+            {/* toDO {friendRequestCount > 0 && (
             <circle cx="850" cy="900" r="200" fill="red" />
           )} */}
           </svg>
         </div>
         <span>Friend requests</span>
-      </a>
-      <a className={styles.sidebarOptionWrapper} href={"users"}>
+      </Link>
+      <Link className={styles.sidebarOptionWrapper} to={"users"}>
         <div className={styles.svgDiv}>
           <svg fill="lightblue" viewBox="0 0 476.267 476.267">
             <g>
@@ -121,7 +122,7 @@ export default function Sidebar() {
           </svg>
         </div>
         <span>Search users</span>
-      </a>
+      </Link>
 
       <button type="button" onClick={handleLogout}>
         <span>Logout</span>

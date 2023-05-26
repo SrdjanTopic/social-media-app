@@ -23,12 +23,12 @@ class PostRepository @Inject()()(implicit ec: ExecutionContext){
 
   def getAllFromFriends(userId:Long) = {
     implicit val getResults: GetResult[PostWithUserDTO] =
-      GetResult(pr => PostWithUserDTO(pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<))
-    val query = sql"""select table2.postId, table2.text, table2.creationDate, table2.likeCount, table2.dislikeCount, table2.username, table2.fullName, table3.isLiked
+      GetResult(pr => PostWithUserDTO(pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<))
+    val query = sql"""select table2.postId, table2.text, table2.creationDate, table2.likeCount, table2.dislikeCount, table2.userId, table2.username, table2.fullName, table3.isLiked
                      |from
-                     |    (select table1.id as postId, table1.text, table1.creationDate, table1.likeCount, table1.dislikeCount, table1.username, table1.fullName
+                     |    (select table1.id as postId, table1.text, table1.creationDate, table1.likeCount, table1.dislikeCount, table1.userId, table1.username, table1.fullName
                      |    from
-                     |		(select posts.id, text, creationDate, likeCount, dislikeCount, username, fullName
+                     |		(select posts.id, text, creationDate, likeCount, dislikeCount, userId, username, fullName
                      |		from posts inner join users on posts.userId=users.id
                      |		where posts.userId in
                      |			(select REPLACE(CONCAT(user1Id, user2Id), $userId, '') as 'friendId' from friends)) as table1,

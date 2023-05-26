@@ -8,6 +8,7 @@ case class PostWithUserDTO(
                             creationDate: Option[Timestamp],
                             likeCount: Long,
                             dislikeCount: Long,
+                            userId: Long,
                             username:String,
                             fullName:String ,
                             isLiked:Option[Boolean]

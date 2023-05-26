@@ -4,6 +4,7 @@ type Post = {
   creationDate: Date;
   likeCount: number;
   dislikeCount: number;
+  userId: number;
   username: string;
   fullName: string;
   isLiked?: boolean;

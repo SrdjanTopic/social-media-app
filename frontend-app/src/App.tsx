@@ -1,6 +1,11 @@
 import "./App.css";
 import Sidebar from "./components/shared/Sidebar/Sidebar";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+} from "react-router-dom";
 import ErrorPage from "./pages/fallbackPages/ErrorPage";
 import useCurrentUser from "./hooks/user/useCurrentUser";
 import React from "react";
@@ -11,7 +16,7 @@ import LoadingSpinner from "./components/shared/LoadingSpinner/LoadingSpinner";
 import ProfilePage from "./pages/ProfilePage";
 import HomePage from "./pages/HomePage";
 
-const routerLoggedIn = createBrowserRouter([
+const routerLoggedIn = [
   {
     path: "/",
     element: <HomePage />,
@@ -32,9 +37,11 @@ const routerLoggedIn = createBrowserRouter([
     element: <ProfilePage />,
     errorElement: <ErrorPage />,
   },
-]);
+];
 
-const routerNotLoggedIn = createBrowserRouter([
+const loggedInRoutes = <Routes></Routes>;
+
+const routerNotLoggedIn = [
   {
     path: "/",
     element: <LoginPage />,
@@ -44,7 +51,7 @@ const routerNotLoggedIn = createBrowserRouter([
     path: "/register",
     element: <RegisterPage />,
   },
-]);
+];
 
 export const UserContext = React.createContext<User>({
   id: -1,
@@ -61,11 +68,30 @@ export default function App() {
       <div className="wrapper">
         <Sidebar />
         <div className="mainContent">
-          <RouterProvider router={routerLoggedIn} />
+          {/* <RouterProvider router={routerLoggedIn} /> */}
+          <Routes>
+            {routerLoggedIn.map((route) => (
+              <Route
+                key={route.path}
+                element={route.element}
+                errorElement={route.errorElement}
+                path={route.path}
+              />
+            ))}
+          </Routes>
         </div>
       </div>
     </UserContext.Provider>
   ) : (
-    <RouterProvider router={routerNotLoggedIn} />
+    <Routes>
+      {routerNotLoggedIn.map((route) => (
+        <Route
+          key={route.path}
+          element={route.element}
+          errorElement={route.errorElement}
+          path={route.path}
+        />
+      ))}
+    </Routes>
   );
 }

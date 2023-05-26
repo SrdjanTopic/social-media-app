@@ -8,6 +8,7 @@ import useGetPostPicture from "../../../hooks/img/useGetPostPicture";
 import postRatingService from "../../../services/postRatingService";
 import Comment from "../Comment/Comment";
 import { UserContext } from "../../../App";
+import { Link } from "react-router-dom";
 
 type PostProps = {
   post: Post;
@@ -118,9 +119,9 @@ export default function Post({ post, setPost }: PostProps) {
 
   return (
     <div className={styles.card}>
-      <a href={`/profile/${post.username}`} className={styles.user}>
+      <Link to={`/profile/${post.userId}`} className={styles.user}>
         {post.fullName}
-      </a>
+      </Link>
       {post.creationDate && (
         <div className={styles.date}>
           <time>

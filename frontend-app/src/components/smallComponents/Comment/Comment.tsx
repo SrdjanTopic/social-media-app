@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { getDateDiffString } from "../../../utils/functions";
 import styles from "./Comment.module.css";
+import { Link } from "react-router-dom";
 
 type CommentProps = {
   comment: CommentWithUser;
@@ -30,9 +31,9 @@ export default function Comment({
     <div className={styles.commentWrapper}>
       <div className={styles.textWrapper}>
         <div className={styles.headingWrapper}>
-          <a href={`/profile/${comment.userId}`} className={styles.user}>
+          <Link to={`/profile/${comment.userId}`} className={styles.user}>
             {comment.fullName}
-          </a>
+          </Link>
           {currentUser.id == comment.userId && (
             <>
               <button

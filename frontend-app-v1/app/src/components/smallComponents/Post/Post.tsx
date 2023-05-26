@@ -104,9 +104,9 @@ export default function Post({ post }: PostProps) {
   }
   return (
     <div className={styles.card}>
-      <a href={`/profile/${post.username}`} className={styles.user}>
+      <Link to={`/profile/${post.username}`} className={styles.user}>
         {post.fullName}
-      </a>
+      </Link>
       {post.creationDate && (
         <div className={styles.date}>
           <time>

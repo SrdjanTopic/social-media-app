@@ -3,7 +3,6 @@ import useGetFriendPosts from "../hooks/post/useGetFriendPosts";
 
 export default function HomePage() {
   const [posts, setPosts] = useGetFriendPosts();
-
   function setPost(post: Post) {
     setPosts(
       posts.map((postt) => {

@@ -27,9 +27,9 @@ export default function Comment({ comment, deleteComment }: CommentProps) {
     <div className={styles.commentWrapper}>
       <div className={styles.textWrapper}>
         <div className={styles.headingWrapper}>
-          <a href={`/profile/${comment.username}`} className={styles.user}>
+          <Link to={`/profile/${comment.username}`} className={styles.user}>
             {comment.fullName}
-          </a>
+          </Link>
           {isMyComment && (
             <>
               <button
