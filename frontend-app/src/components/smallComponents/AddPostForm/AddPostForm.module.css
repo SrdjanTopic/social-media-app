@@ -1,0 +1,94 @@
+.wrapper {
+  width: 100%;
+}
+.wrapper textarea {
+  width: 100%;
+  border: none;
+  padding: 0.5rem;
+  outline: none;
+  border-radius: 0.5rem;
+  resize: none;
+  font-size: 1rem;
+}
+
+.textAndPicWrapper {
+  display: flex;
+}
+
+.imgWrapper {
+  position: relative;
+}
+.imgWrapper img {
+  border: 5px solid hsl(0, 0%, 15%);
+}
+.imgWrapper label {
+  position: absolute;
+  z-index: 10;
+  left: -2.4rem;
+  top: 1.9rem;
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+  background-color: hsla(0, 0%, 25%);
+}
+.imgWrapper label:hover {
+  background-color: hsla(0, 0%, 40%);
+}
+
+.imgWrapper input {
+  display: none;
+}
+.checkMarks {
+  position: absolute;
+  top: 0.5rem;
+  right: 0rem;
+}
+.checkMark {
+  background-color: hsla(0, 0%, 40%);
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.checkMark:hover {
+  background-color: hsla(0, 0%, 50%);
+}
+.svgDiv {
+  position: relative;
+}
+.imgWrapper label:hover .tootip {
+  opacity: 1;
+}
+.svgDiv:hover .tootip {
+  opacity: 1;
+}
+
+.tootip {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 0;
+  cursor: default;
+  pointer-events: none;
+  color: hsl(0, 0%, 100%);
+  width: fit-content;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.wrapper button {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  padding: 0 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  background-color: hsl(240, 100%, 60%);
+}
+
+.wrapper button:hover {
+  background-color: hsl(240, 100%, 70%);
+}
+
+.wrapper button:disabled {
+  cursor: default;
+  background-color: hsl(240, 100%, 70%);
+}

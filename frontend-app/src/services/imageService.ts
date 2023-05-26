@@ -40,7 +40,6 @@ async function savePostPicture(image: string | null, postId: number) {
       const res = await _axios.post(`${url}/post/${postId}`, {
         image: image.split("base64,")[1],
       });
-      window.location.reload();
       return res;
     } catch (err) {
       throw new Error("Error");

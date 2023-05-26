@@ -138,7 +138,11 @@ export default function Post({ post, setPost }: PostProps) {
         </div>
       )}
       <p className={styles.text}>{post.text}</p>
-      {postPicture && <img src={postPicture} alt="PostPic" />}
+      {postPicture && (
+        <div className={styles.imgWrapper}>
+          <img src={postPicture} alt="PostPic" />
+        </div>
+      )}
       <div className={styles.buttonsWrapper}>
         <button
           type="button"

@@ -10,6 +10,8 @@
   flex-direction: column;
   user-select: none;
   white-space: nowrap;
+  position: sticky;
+  top: 1rem;
 }
 
 .sidebarOptionWrapper {
