@@ -1,3 +1,6 @@
+import friendRequestService from "../services/friendRequestService";
+import friendService from "../services/friendService";
+
 export function getDateDiffString(date2: Date, date1: Date) {
   const yearDiff = date2.getFullYear() - date1?.getFullYear();
   const monthDiff = date2.getMonth() - date1?.getMonth();
@@ -43,4 +46,39 @@ export function getUserUpdateInfo(user: UpdateUser, updateInfo: UpdateUser) {
       username:
         updateInfo.username == user.username ? undefined : updateInfo.username,
     };
+}
+
+export async function userActions(
+  userId: number,
+  userAction: UserActions
+): Promise<boolean> {
+  let isDone = false;
+  switch (userAction.action) {
+    case "unfriend": {
+      const res = await friendService.unfriendUser(userId);
+      isDone = res !== 0;
+      break;
+    }
+    case "cancelRequest": {
+      const res = await friendRequestService.deleteRequest(userId);
+      isDone = res !== 0;
+      break;
+    }
+    case "acceptRequest": {
+      const res = await friendRequestService.acceptRequest(userId);
+      isDone = res !== 0;
+      break;
+    }
+    case "rejectRequest": {
+      const res = await friendRequestService.deleteRequest(userId);
+      isDone = res !== 0;
+      break;
+    }
+    case "requestFriendship": {
+      const res = await friendRequestService.sendFriendRequest(userId);
+      isDone = res !== 0;
+      break;
+    }
+  }
+  return isDone;
 }

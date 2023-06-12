@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import useGetUserPicture from "../../../hooks/img/useGetUserPicture";
 import styles from "./UserCard.module.css";
-import friendService from "../../../services/friendService";
-import friendRequestService from "../../../services/friendRequestService";
+import { userActions } from "../../../utils/functions";
 
 type UserCardProps = {
   user: User;
@@ -13,54 +12,32 @@ export default function UserCard({ user, setUser }: UserCardProps) {
   const profilePic = useGetUserPicture(user.id);
 
   function userAction(userId: number, userAction: UserActions) {
-    switch (userAction.action) {
-      case "unfriend": {
-        friendService
-          .unfriendUser(userId)
-          .then((res) => {
-            if (res !== 0) setUser({ ...user, isFriend: false });
-          })
-          .catch((err) => console.log(err));
-        break;
+    userActions(userId, userAction).then((isDone) => {
+      if (isDone) {
+        switch (userAction.action) {
+          case "unfriend": {
+            setUser({ ...user, isFriend: false });
+            break;
+          }
+          case "cancelRequest": {
+            setUser({ ...user, amRequesting: false });
+            break;
+          }
+          case "acceptRequest": {
+            setUser({ ...user, amRequested: false, isFriend: true });
+            break;
+          }
+          case "rejectRequest": {
+            setUser({ ...user, amRequested: false });
+            break;
+          }
+          case "requestFriendship": {
+            setUser({ ...user, amRequesting: true });
+            break;
+          }
+        }
       }
-      case "cancelRequest": {
-        friendRequestService
-          .deleteRequest(userId)
-          .then((res) => {
-            if (res !== 0) setUser({ ...user, amRequesting: false });
-          })
-          .catch((err) => console.log(err));
-        break;
-      }
-      case "acceptRequest": {
-        friendRequestService
-          .acceptRequest(userId)
-          .then((res) => {
-            if (res !== 0)
-              setUser({ ...user, amRequested: false, isFriend: true });
-          })
-          .catch((err) => console.log(err));
-        break;
-      }
-      case "rejectRequest": {
-        friendRequestService
-          .deleteRequest(userId)
-          .then((res) => {
-            if (res !== 0) setUser({ ...user, amRequested: false });
-          })
-          .catch((err) => console.log(err));
-        break;
-      }
-      case "requestFriendship": {
-        friendRequestService
-          .sendFriendRequest(userId)
-          .then((res) => {
-            if (res !== 0) setUser({ ...user, amRequesting: true });
-          })
-          .catch((err) => console.log(err));
-        break;
-      }
-    }
+    });
   }
 
   return (
