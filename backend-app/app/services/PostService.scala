@@ -13,11 +13,9 @@ class PostService @Inject()(postRepository:PostRepository, userRepository: UserR
     postRepository.isMyPost(postId, userId)
   }
 
-  def getAllForUser(userId: Long): Future[Either[String, Seq[PostDTO]]] = {
+  def getAllForUser(userId: Long, myId:Long): Future[Either[String, Seq[PostWithUserDTO]]] = {
     userRepository.existsById(userId).flatMap {
-      case true => postRepository.getAllForUser(userId)
-        .map(posts => Right(posts
-          .map(p => PostDTO(p.id, p.text, p.userId, Option(p.creationDate), p.likeCount, p.dislikeCount))))
+      case true => postRepository.getAllForUser(userId, myId).map(res=>Right(res))
       case false => Future.successful(Left(s"User with ID:'${userId}' does not exist!"))
     }
   }

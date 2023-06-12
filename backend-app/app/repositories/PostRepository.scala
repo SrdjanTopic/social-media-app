@@ -35,13 +35,20 @@ class PostRepository @Inject()()(implicit ec: ExecutionContext){
                      |	users
                      |	where users.id=$userId) as table2
                      |left outer join
-                     |	(select * from postRatings where userId=14) as table3
+                     |	(select * from postRatings where userId=$userId) as table3
                      |on table2.postId=table3.postId order by creationDate desc;""".stripMargin.as[PostWithUserDTO]
     db.run(query)
   }
 
-  def getAllForUser(userId:Long): Future[Seq[Post]] = {
-    db.run(SlickTables.postTable.filter(_.userId===userId).sortBy(_.creationDate.desc).result)
+  def getAllForUser(userId:Long, myId:Long): Future[Seq[PostWithUserDTO]] = {
+    implicit val getResults: GetResult[PostWithUserDTO] =
+      GetResult(pr => PostWithUserDTO(pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<))
+    val query = sql"""select posts.id, text, creationDate, likeCount, dislikeCount, posts.userId, username, fullName, table1.isLiked
+                     |from posts left outer join (select * from postRatings where postRatings.userId=$myId) as table1
+                     |    on posts.id = table1.postId inner join users on users.id = posts.userId
+                     |where posts.userId=$userId
+                     |order by creationDate desc;""".stripMargin.as[PostWithUserDTO]
+    db.run(query)
   }
 
   def getById(postId:Long): Future[Option[Post]] = {

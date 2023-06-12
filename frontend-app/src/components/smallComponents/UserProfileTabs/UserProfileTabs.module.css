@@ -1,0 +1,42 @@
+.tabs {
+  padding: 1rem;
+  margin-left: calc(var(--pictureDim) + 1rem);
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  position: relative;
+}
+
+.tab {
+  text-decoration: none;
+  padding: 0.5rem;
+  font-size: 1.3rem;
+  color: hsl(0, 0%, 80%);
+  border-radius: 0.5rem;
+}
+
+.tab:hover {
+  background-color: hsl(0, 0%, 25%);
+}
+
+.clickedTab {
+  color: hsl(240, 100%, 80%);
+}
+
+.lockTabs {
+  position: absolute;
+  height: calc(100% - 2rem);
+  width: 13.5rem;
+  background-color: hsla(0, 0%, 20%, 0.5);
+  right: 1rem;
+  border-radius: 0.5rem;
+}
+
+.lockTabs:hover::after {
+  content: "You need to be friends to open these tabs!";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border-radius: 0.5rem;
+  background-color: hsla(0, 0%, 30%, 0.8);
+}

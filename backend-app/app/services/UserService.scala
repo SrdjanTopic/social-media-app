@@ -9,21 +9,25 @@ import javax.inject.Singleton
 import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class UserService @Inject()(userRepository:UserRepository, passwordService: PasswordService, friendsRepository: FriendsRepository, friendRequestsRepository: FriendRequestsRepository)(implicit ec: ExecutionContext){
+  def fillIsFriendIsRequestingIsRequestedForGotUser(user:User, myId:Long) = {
+    if (user.id == myId)
+      Future.successful(Option(UserDTO(user.id, user.username, user.fullName)))
+    else
+      friendsRepository.areFriends(user.id, myId).flatMap {
+        case true => Future.successful(Option(UserDTO(user.id, user.username, user.fullName, None, None, Option(true))))
+        case false =>
+          friendRequestsRepository.exists(user.id, myId).flatMap(amRequesting =>
+            friendRequestsRepository.exists(myId, user.id).map(amRequested =>
+              Option(UserDTO(user.id, user.username, user.fullName, Option(amRequesting), Option(amRequested), Option(false)))
+            )
+          )
+      }
+  }
+
   def findById(userId: Long, myId:Long) = {
     userRepository.findById(userId).flatMap {
       case Some(user) =>
-        if (user.id == myId)
-          Future.successful(Option(UserDTO(user.id, user.username, user.fullName)))
-        else
-          friendsRepository.areFriends(user.id, myId).flatMap {
-            case true => Future.successful(Option(UserDTO(user.id, user.username, user.fullName, None, None, Option(true))))
-            case false =>
-              friendRequestsRepository.exists(userId,myId).flatMap(amRequesting =>
-                friendRequestsRepository.exists(myId, userId).map(amRequested =>
-                  Option(UserDTO(user.id, user.username, user.fullName, Option(amRequesting), Option(amRequested), Option(false)))
-                )
-              )
-          }
+        fillIsFriendIsRequestingIsRequestedForGotUser(user, myId)
       case None => Future.successful(None)
     }
   }
@@ -32,11 +36,7 @@ class UserService @Inject()(userRepository:UserRepository, passwordService: Pass
   def findByUsername(username: String, myId:Long) = {
     userRepository.findByUsername(username).flatMap {
       case Some(user) =>
-        if(user.id==myId)
-          Future.successful(Option(UserDTO(user.id, user.username, user.fullName)))
-        else friendsRepository.areFriends(user.id, myId).map(isFriend=>
-          Option(UserDTO(user.id, user.username, user.fullName, Option(isFriend)))
-        )
+        fillIsFriendIsRequestingIsRequestedForGotUser(user, myId)
       case None => Future.successful(None)
     }
   }

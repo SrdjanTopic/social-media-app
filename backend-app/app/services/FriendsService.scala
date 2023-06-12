@@ -2,12 +2,13 @@ package services
 
 import com.google.inject.Inject
 import repositories.FriendsRepository
+import models.User
 
 import javax.inject.Singleton
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class FriendsService @Inject()(friendsRepository: FriendsRepository)(implicit ec: ExecutionContext){
+class FriendsService @Inject()(friendsRepository: FriendsRepository, userService: UserService)(implicit ec: ExecutionContext){
   def getAllUsersThatAreNotFriends(myId: Long, username: Option[String], fullName: Option[String]) = {
     username match {
       case Some(username) => fullName match {
@@ -21,8 +22,10 @@ class FriendsService @Inject()(friendsRepository: FriendsRepository)(implicit ec
     }
   }
 
-  def getFriendsForUser(userId: Long) = {
-    friendsRepository.getFriendsForUser(userId)
+  def getFriendsForUser(userId: Long, myId:Long) = {
+    friendsRepository.getFriendsForUser(userId).flatMap(friends=>
+      Future.traverse(friends.map(friend => userService.fillIsFriendIsRequestingIsRequestedForGotUser(User(
+        friend.id, friend.username, friend.fullName, ""), myId)))(friend=>friend))
   }
 
   def unfriendUser(friendId: Long, myId: Long) = {

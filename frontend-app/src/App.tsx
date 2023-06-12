@@ -1,57 +1,18 @@
-import "./App.css";
-import Sidebar from "./components/shared/Sidebar/Sidebar";
-import {
-  createBrowserRouter,
-  Route,
-  RouterProvider,
-  Routes,
-} from "react-router-dom";
-import ErrorPage from "./pages/fallbackPages/ErrorPage";
-import useCurrentUser from "./hooks/user/useCurrentUser";
 import React from "react";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import LogoutPage from "./pages/fallbackPages/LogoutPage";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
 import LoadingSpinner from "./components/shared/LoadingSpinner/LoadingSpinner";
-import ProfilePage from "./pages/ProfilePage";
+import Sidebar from "./components/shared/Sidebar/Sidebar";
+import useCurrentUser from "./hooks/user/useCurrentUser";
+import ErrorPage from "./pages/fallbackPages/ErrorPage";
+import LogoutPage from "./pages/fallbackPages/LogoutPage";
 import HomePage from "./pages/HomePage";
-
-const routerLoggedIn = [
-  {
-    path: "/",
-    element: <HomePage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/register",
-    element: <LogoutPage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/login",
-    element: <LogoutPage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/profile/:userId",
-    element: <ProfilePage />,
-    errorElement: <ErrorPage />,
-  },
-];
-
-const loggedInRoutes = <Routes></Routes>;
-
-const routerNotLoggedIn = [
-  {
-    path: "/",
-    element: <LoginPage />,
-    errorElement: <LoginPage />,
-  },
-  {
-    path: "/register",
-    element: <RegisterPage />,
-  },
-];
+import LoginPage from "./pages/LoginPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import RegisterPage from "./pages/RegisterPage";
+import AboutPage from "./pages/ProfilePage/AboutPage";
+import PostsPage from "./pages/ProfilePage/PostsPage";
+import FriendsPage from "./pages/ProfilePage/FriendsPage";
 
 export const UserContext = React.createContext<User>({
   id: -1,
@@ -70,28 +31,41 @@ export default function App() {
         <div className="mainContent">
           {/* <RouterProvider router={routerLoggedIn} /> */}
           <Routes>
-            {routerLoggedIn.map((route) => (
-              <Route
-                key={route.path}
-                element={route.element}
-                errorElement={route.errorElement}
-                path={route.path}
-              />
-            ))}
+            <Route
+              path="/"
+              element={<HomePage />}
+              errorElement={<ErrorPage />}
+            />
+            <Route
+              path="/register"
+              element={<LogoutPage />}
+              errorElement={<ErrorPage />}
+            />
+            <Route
+              path="/login"
+              element={<LogoutPage />}
+              errorElement={<ErrorPage />}
+            />
+            <Route
+              path="/profile/:userId"
+              element={<ProfilePage />}
+              errorElement={<ErrorPage />}
+            >
+              <Route path="about" element={<AboutPage />} />
+              <Route path="friends" element={<FriendsPage />} />
+              <Route path="posts" element={<PostsPage />} />
+              <Route path="liked" element={<h2>Liked</h2>} />
+              <Route path="disliked" element={<h2>Disliked</h2>} />
+              <Route path="*" element={<ErrorPage />} />
+            </Route>
           </Routes>
         </div>
       </div>
     </UserContext.Provider>
   ) : (
     <Routes>
-      {routerNotLoggedIn.map((route) => (
-        <Route
-          key={route.path}
-          element={route.element}
-          errorElement={route.errorElement}
-          path={route.path}
-        />
-      ))}
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/*" element={<LoginPage />} />
     </Routes>
   );
 }

@@ -1,12 +1,13 @@
 import { ChangeEvent, useRef, useState } from "react";
 import useGetUserPicture from "../../../hooks/img/useGetUserPicture";
 import styles from "./Profile.module.css";
-import defaultPic from "../../../assets/defaultUserImg.jpg";
 import imageService from "../../../services/imageService";
 import myProfileService from "../../../services/myProfileService";
 import { getUserUpdateInfo } from "../../../utils/functions";
 import friendService from "../../../services/friendService";
 import friendRequestService from "../../../services/friendRequestService";
+import { Outlet } from "react-router-dom";
+import UserProfileTabs from "../../smallComponents/UserProfileTabs/UserProfileTabs";
 
 type ProfileProps = {
   user: User;
@@ -147,7 +148,7 @@ export default function Profile({ user, setUser }: ProfileProps) {
             </>
           )}
           <img
-            src={loadedPicture ? loadedPicture : picture ? picture : defaultPic}
+            src={loadedPicture ? loadedPicture : picture}
             alt="User Profile"
           />
           {loadedPicture && (
@@ -189,6 +190,7 @@ export default function Profile({ user, setUser }: ProfileProps) {
         </div>
         <div className={styles.namesWrapper}>
           <input
+            id="username"
             placeholder="Username"
             defaultValue={user.username}
             ref={usernameRef}
@@ -196,7 +198,8 @@ export default function Profile({ user, setUser }: ProfileProps) {
           />
           <br />
           <input
-            placeholder="Username"
+            id="fullName"
+            placeholder="Full name"
             defaultValue={user.fullName}
             ref={fullNameRef}
             disabled={!isEditing}
@@ -298,6 +301,8 @@ export default function Profile({ user, setUser }: ProfileProps) {
           </div>
         )}
       </div>
+      <UserProfileTabs user={user} />
+      <Outlet context={{ user: user }} />
     </div>
   );
 }

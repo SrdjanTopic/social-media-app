@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import friendRequestService from "../../services/friendRequestService";
 import friendService from "../../services/friendService";
 
 type CustomStateHook = [User[], (newState: User[]) => void];

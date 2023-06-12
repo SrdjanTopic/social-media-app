@@ -18,8 +18,8 @@ class PostController @Inject()(postService:PostService, authenticatedAction: Aut
     postService.isMyPost(postId, request.userId.toLong).map(res=>Ok(Json.toJson(res)))
   }
 
-  def getAllForUser(userId:Long) = authenticatedAction.async{
-    postService.getAllForUser(userId).map{
+  def getAllForUser(userId:Long) = authenticatedAction.async{ request=>
+    postService.getAllForUser(userId, request.userId.toLong).map{
       case Left(errorMessage) => Conflict(Json.obj("message" -> errorMessage))
       case Right(posts) => Ok(Json.toJson(posts))
     }
