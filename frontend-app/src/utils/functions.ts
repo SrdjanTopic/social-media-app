@@ -55,28 +55,48 @@ export async function userActions(
   let isDone = false;
   switch (userAction.action) {
     case "unfriend": {
-      const res = await friendService.unfriendUser(userId);
-      isDone = res !== 0;
+      try {
+        const res = await friendService.unfriendUser(userId);
+        isDone = res !== 0;
+      } catch (error) {
+        throw new Error("Error");
+      }
       break;
     }
     case "cancelRequest": {
-      const res = await friendRequestService.deleteRequest(userId);
-      isDone = res !== 0;
+      try {
+        const res = await friendRequestService.deleteRequest(userId);
+        isDone = res !== 0;
+      } catch (error) {
+        throw new Error("Error");
+      }
       break;
     }
     case "acceptRequest": {
-      const res = await friendRequestService.acceptRequest(userId);
-      isDone = res !== 0;
+      try {
+        const res = await friendRequestService.acceptRequest(userId);
+        isDone = res !== 0;
+      } catch (error) {
+        throw new Error("Error");
+      }
       break;
     }
     case "rejectRequest": {
-      const res = await friendRequestService.deleteRequest(userId);
-      isDone = res !== 0;
+      try {
+        const res = await friendRequestService.deleteRequest(userId);
+        isDone = res !== 0;
+      } catch (error) {
+        throw new Error("Error");
+      }
       break;
     }
     case "requestFriendship": {
-      const res = await friendRequestService.sendFriendRequest(userId);
-      isDone = res !== 0;
+      try {
+        const res = await friendRequestService.sendFriendRequest(userId);
+        isDone = res !== 0;
+      } catch (error) {
+        throw new Error("Error");
+      }
       break;
     }
   }

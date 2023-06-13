@@ -11,14 +11,14 @@ import scala.concurrent.{ExecutionContext, Future}
 class UserService @Inject()(userRepository:UserRepository, passwordService: PasswordService, friendsRepository: FriendsRepository, friendRequestsRepository: FriendRequestsRepository)(implicit ec: ExecutionContext){
   def fillIsFriendIsRequestingIsRequestedForGotUser(user:User, myId:Long) = {
     if (user.id == myId)
-      Future.successful(Option(UserDTO(user.id, user.username, user.fullName)))
+      Future.successful(UserDTO(user.id, user.username, user.fullName))
     else
       friendsRepository.areFriends(user.id, myId).flatMap {
-        case true => Future.successful(Option(UserDTO(user.id, user.username, user.fullName, None, None, Option(true))))
+        case true => Future.successful(UserDTO(user.id, user.username, user.fullName, None, None, Option(true)))
         case false =>
           friendRequestsRepository.exists(user.id, myId).flatMap(amRequesting =>
             friendRequestsRepository.exists(myId, user.id).map(amRequested =>
-              Option(UserDTO(user.id, user.username, user.fullName, Option(amRequesting), Option(amRequested), Option(false)))
+              UserDTO(user.id, user.username, user.fullName, Option(amRequesting), Option(amRequested), Option(false))
             )
           )
       }
@@ -27,7 +27,7 @@ class UserService @Inject()(userRepository:UserRepository, passwordService: Pass
   def findById(userId: Long, myId:Long) = {
     userRepository.findById(userId).flatMap {
       case Some(user) =>
-        fillIsFriendIsRequestingIsRequestedForGotUser(user, myId)
+        fillIsFriendIsRequestingIsRequestedForGotUser(user, myId).map(user=>Option(user))
       case None => Future.successful(None)
     }
   }
@@ -36,7 +36,7 @@ class UserService @Inject()(userRepository:UserRepository, passwordService: Pass
   def findByUsername(username: String, myId:Long) = {
     userRepository.findByUsername(username).flatMap {
       case Some(user) =>
-        fillIsFriendIsRequestingIsRequestedForGotUser(user, myId)
+        fillIsFriendIsRequestingIsRequestedForGotUser(user, myId).map(user=>Option(user))
       case None => Future.successful(None)
     }
   }

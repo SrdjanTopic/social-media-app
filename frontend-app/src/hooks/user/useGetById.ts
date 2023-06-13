@@ -15,9 +15,5 @@ export default function useGetById(
     else setUser(null);
   }, [userId]);
 
-  function customSetState(newUser: User | null | undefined) {
-    setUser(newUser);
-  }
-
-  return [user, customSetState];
+  return [user, setUser];
 }

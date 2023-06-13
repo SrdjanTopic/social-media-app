@@ -16,7 +16,7 @@ class FriendsController  @Inject()(friendsService:FriendsService, authenticatedA
 
   def getFriendsForCurrentUser() = authenticatedAction.async(request => {
     val userId: Long = request.userId.toLong
-    friendsService.getFriendsForUser(userId, request.userId.toLong).map(results => Ok(Json.toJson(results)))
+    friendsService.getFriendsForCurrentUser(userId).map(results => Ok(Json.toJson(results)))
   })
 
   def getFriendsForUser(userId:Long) = authenticatedAction.async( request=>

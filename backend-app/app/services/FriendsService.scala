@@ -28,6 +28,12 @@ class FriendsService @Inject()(friendsRepository: FriendsRepository, userService
         friend.id, friend.username, friend.fullName, ""), myId)))(friend=>friend))
   }
 
+  def getFriendsForCurrentUser(myId:Long) = {
+    friendsRepository.getFriendsForUser(myId).map(friends =>
+      friends.map(friend=>friend.copy(isFriend = Option(true)))
+    )
+  }
+
   def unfriendUser(friendId: Long, myId: Long) = {
     friendsRepository.unfriendUser(friendId, myId)
   }

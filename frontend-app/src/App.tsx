@@ -10,9 +10,10 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
-import AboutPage from "./pages/ProfilePage/AboutPage";
-import PostsPage from "./pages/ProfilePage/PostsPage";
-import FriendsPage from "./pages/ProfilePage/FriendsPage";
+import FriendsTab from "./pages/ProfilePage/Tabs/FriendsTab";
+import AboutTab from "./pages/ProfilePage/Tabs/AboutTab";
+import PostsTab from "./pages/ProfilePage/Tabs/PostsTab";
+import FriendsPage from "./pages/FriendsPage";
 
 export const UserContext = React.createContext<User>({
   id: -1,
@@ -29,7 +30,6 @@ export default function App() {
       <div className="wrapper">
         <Sidebar />
         <div className="mainContent">
-          {/* <RouterProvider router={routerLoggedIn} /> */}
           <Routes>
             <Route
               path="/"
@@ -51,13 +51,18 @@ export default function App() {
               element={<ProfilePage />}
               errorElement={<ErrorPage />}
             >
-              <Route path="about" element={<AboutPage />} />
-              <Route path="friends" element={<FriendsPage />} />
-              <Route path="posts" element={<PostsPage />} />
+              <Route path="about" element={<AboutTab />} />
+              <Route path="friends" element={<FriendsTab />} />
+              <Route path="posts" element={<PostsTab />} />
               <Route path="liked" element={<h2>Liked</h2>} />
               <Route path="disliked" element={<h2>Disliked</h2>} />
               <Route path="*" element={<ErrorPage />} />
             </Route>
+            <Route
+              path="/friends"
+              element={<FriendsPage />}
+              errorElement={<ErrorPage />}
+            />
           </Routes>
         </div>
       </div>

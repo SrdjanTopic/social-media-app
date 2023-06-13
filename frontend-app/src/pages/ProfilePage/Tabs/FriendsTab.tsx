@@ -1,8 +1,8 @@
 import { useOutletContext } from "react-router-dom";
-import useGetFriends from "../../hooks/friend/useGetFriends";
-import UserCard from "../../components/smallComponents/UserCard/UserCard";
+import useGetFriends from "../../../hooks/friend/useGetFriends";
+import UserCard from "../../../components/smallComponents/UserCard/UserCard";
 
-export default function FriendsPage() {
+export default function FriendsTab() {
   const user = useOutletContext<{ user: User }>().user;
   const [friends, setFriends] = useGetFriends(user.id);
 

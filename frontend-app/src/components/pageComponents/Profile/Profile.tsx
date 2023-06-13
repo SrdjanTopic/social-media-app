@@ -1,11 +1,9 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState, useEffect } from "react";
 import useGetUserPicture from "../../../hooks/img/useGetUserPicture";
 import styles from "./Profile.module.css";
 import imageService from "../../../services/imageService";
 import myProfileService from "../../../services/myProfileService";
 import { getUserUpdateInfo, userActions } from "../../../utils/functions";
-import friendService from "../../../services/friendService";
-import friendRequestService from "../../../services/friendRequestService";
 import { Outlet } from "react-router-dom";
 import UserProfileTabs from "../../smallComponents/UserProfileTabs/UserProfileTabs";
 
@@ -17,7 +15,6 @@ type ProfileProps = {
 export default function Profile({ user, setUser }: ProfileProps) {
   const [loadedPicture, setLoadedPicture] = useState<string | null>(null);
   const picture = useGetUserPicture(user.id);
-
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const usernameRef = useRef<HTMLInputElement>(null);
   const fullNameRef = useRef<HTMLInputElement>(null);
@@ -173,6 +170,7 @@ export default function Profile({ user, setUser }: ProfileProps) {
             defaultValue={user.username}
             ref={usernameRef}
             disabled={!isEditing}
+            key={user.id}
           />
           <br />
           <input
@@ -181,6 +179,7 @@ export default function Profile({ user, setUser }: ProfileProps) {
             defaultValue={user.fullName}
             ref={fullNameRef}
             disabled={!isEditing}
+            key={user.id + 1}
           />
           {user.isFriend == undefined && (
             <>
