@@ -43,8 +43,8 @@ class CommentController @Inject()(commentService: CommentService, authenticatedA
   }
 
   def deleteComment(commentId: Long) = authenticatedAction.async { implicit request =>
-    commentService.deleteComment(commentId, request.userId.toLong).map(deletedPost => {
-      Ok(Json.toJson(deletedPost))
+    commentService.deleteComment(commentId, request.userId.toLong).map(deletedComment => {
+      Ok(Json.toJson(deletedComment))
     })
   }
 }

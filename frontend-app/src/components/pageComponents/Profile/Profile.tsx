@@ -1,9 +1,12 @@
-import { ChangeEvent, useRef, useState, useEffect } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import useGetUserPicture from "../../../hooks/img/useGetUserPicture";
 import styles from "./Profile.module.css";
 import imageService from "../../../services/imageService";
 import myProfileService from "../../../services/myProfileService";
-import { getUserUpdateInfo, userActions } from "../../../utils/functions";
+import {
+  getUserUpdateInfo,
+  userActions,
+} from "../../../dataManipulationFunctions/userFunctions";
 import { Outlet } from "react-router-dom";
 import UserProfileTabs from "../../smallComponents/UserProfileTabs/UserProfileTabs";
 

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import useGetUserPicture from "../../../hooks/img/useGetUserPicture";
 import styles from "./UserCard.module.css";
-import { userActions } from "../../../utils/functions";
+import { userActions } from "../../../dataManipulationFunctions/userFunctions";
 
 type UserCardProps = {
   user: User;

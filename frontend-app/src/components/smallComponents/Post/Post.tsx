@@ -1,14 +1,13 @@
 import { useContext, useRef } from "react";
 import useGetCommentsForPost from "../../../hooks/comment/useGetCommentsForPost";
 import { getDateDiffString } from "../../../utils/functions";
-// import Comment from "../Comment/Comment";
 import styles from "./Post.module.css";
 import commentService from "../../../services/commentsService";
 import useGetPostPicture from "../../../hooks/img/useGetPostPicture";
-import postRatingService from "../../../services/postRatingService";
 import Comment from "../Comment/Comment";
 import { UserContext } from "../../../App";
 import { Link } from "react-router-dom";
+import { postActions } from "../../../dataManipulationFunctions/postFunctions";
 
 type PostProps = {
   post: Post;
@@ -21,99 +20,36 @@ export default function Post({ post, setPost }: PostProps) {
   const postPicture = useGetPostPicture(post.id);
   const currentUser = useContext(UserContext);
 
-  function handleComment() {
+  async function handleComment() {
     if (writeCommentRef.current) {
       if (writeCommentRef.current.value == "") writeCommentRef.current.focus();
-      else
-        commentService
-          .writeCommentForPost({
+      else {
+        try {
+          const comment = await commentService.writeCommentForPost({
             postId: post.id,
             text: writeCommentRef.current.value,
-          })
-          .then((comment) => setComments([comment].concat(comments)));
+          });
+          setComments([comment].concat(comments));
+        } catch (error) {
+          console.log(error);
+        }
+      }
     }
   }
-  function deleteComment(commentId: number) {
-    commentService
-      .deleteComment(commentId)
-      .then(() =>
-        setComments(comments.filter((comment) => comment.id !== commentId))
-      );
-  }
-
-  function handleLike() {
-    if (post.isLiked) {
-      postRatingService
-        .removeRating(post.id)
-        .then(() =>
-          setPost({
-            ...post,
-            isLiked: undefined,
-            likeCount: post.likeCount - 1,
-          })
-        )
-        .catch((err) => console.log(err));
-    } else if (post.isLiked == undefined) {
-      postRatingService
-        .addRating(post.id, true)
-        .then(() =>
-          setPost({
-            ...post,
-            isLiked: true,
-            likeCount: post.likeCount + 1,
-          })
-        )
-        .catch((err) => console.log(err));
-    } else {
-      postRatingService
-        .updateRating(post.id, true)
-        .then(() =>
-          setPost({
-            ...post,
-            isLiked: true,
-            likeCount: post.likeCount + 1,
-            dislikeCount: post.dislikeCount - 1,
-          })
-        )
-        .catch((err) => console.log(err));
+  async function deleteComment(commentId: number) {
+    try {
+      const res = await commentService.deleteComment(commentId);
+      if (res !== 0)
+        setComments(comments.filter((comment) => comment.id !== commentId));
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  function handleDislike() {
-    if (post.isLiked == false) {
-      postRatingService
-        .removeRating(post.id)
-        .then(() =>
-          setPost({
-            ...post,
-            isLiked: undefined,
-            dislikeCount: post.dislikeCount - 1,
-          })
-        )
-        .catch((err) => console.log(err));
-    } else if (post.isLiked == undefined) {
-      postRatingService
-        .addRating(post.id, false)
-        .then(() =>
-          setPost({
-            ...post,
-            isLiked: false,
-            dislikeCount: post.dislikeCount + 1,
-          })
-        )
-        .catch((err) => console.log(err));
-    } else {
-      postRatingService
-        .updateRating(post.id, false)
-        .then(() =>
-          setPost({
-            ...post,
-            isLiked: false,
-            dislikeCount: post.dislikeCount + 1,
-            likeCount: post.likeCount - 1,
-          })
-        )
-        .catch((err) => console.log(err));
+  async function handlePostAction(action: PostAction) {
+    const returnPost = await postActions(post, action);
+    if (returnPost !== null) {
+      setPost(returnPost);
     }
   }
 
@@ -149,7 +85,7 @@ export default function Post({ post, setPost }: PostProps) {
           className={`${styles.actionButton} ${
             post.isLiked == true ? styles.liked : ""
           }`}
-          onClick={handleLike}
+          onClick={() => handlePostAction({ action: "like" })}
         >
           <svg
             className={styles.likeSvg}
@@ -193,7 +129,7 @@ export default function Post({ post, setPost }: PostProps) {
           className={`${styles.actionButton} ${
             post.isLiked == false ? styles.disliked : ""
           }`}
-          onClick={handleDislike}
+          onClick={() => handlePostAction({ action: "dislike" })}
         >
           <svg
             className={styles.dislikeSvg}

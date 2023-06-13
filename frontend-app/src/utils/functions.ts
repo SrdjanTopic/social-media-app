@@ -1,7 +1,4 @@
-import friendRequestService from "../services/friendRequestService";
-import friendService from "../services/friendService";
-
-export function getDateDiffString(date2: Date, date1: Date) {
+export function getDateDiffString(date2: Date, date1: Date): string {
   const yearDiff = date2.getFullYear() - date1?.getFullYear();
   const monthDiff = date2.getMonth() - date1?.getMonth();
   const dayDiff = date2.getDate() - date1?.getDate();
@@ -32,73 +29,4 @@ export function getDateDiffString(date2: Date, date1: Date) {
   }
   if (minDiff > 0) return `${minDiff} minute${minDiff == 1 ? "" : "s"} ago`;
   else return `now`;
-}
-
-export function getUserUpdateInfo(user: UpdateUser, updateInfo: UpdateUser) {
-  if (
-    updateInfo.username == user.username &&
-    updateInfo.fullName == user.fullName
-  ) {
-    return null;
-  } else
-    return {
-      fullName: updateInfo.fullName,
-      username:
-        updateInfo.username == user.username ? undefined : updateInfo.username,
-    };
-}
-
-export async function userActions(
-  userId: number,
-  userAction: UserActions
-): Promise<boolean> {
-  let isDone = false;
-  switch (userAction.action) {
-    case "unfriend": {
-      try {
-        const res = await friendService.unfriendUser(userId);
-        isDone = res !== 0;
-      } catch (error) {
-        throw new Error("Error");
-      }
-      break;
-    }
-    case "cancelRequest": {
-      try {
-        const res = await friendRequestService.deleteRequest(userId);
-        isDone = res !== 0;
-      } catch (error) {
-        throw new Error("Error");
-      }
-      break;
-    }
-    case "acceptRequest": {
-      try {
-        const res = await friendRequestService.acceptRequest(userId);
-        isDone = res !== 0;
-      } catch (error) {
-        throw new Error("Error");
-      }
-      break;
-    }
-    case "rejectRequest": {
-      try {
-        const res = await friendRequestService.deleteRequest(userId);
-        isDone = res !== 0;
-      } catch (error) {
-        throw new Error("Error");
-      }
-      break;
-    }
-    case "requestFriendship": {
-      try {
-        const res = await friendRequestService.sendFriendRequest(userId);
-        isDone = res !== 0;
-      } catch (error) {
-        throw new Error("Error");
-      }
-      break;
-    }
-  }
-  return isDone;
 }
