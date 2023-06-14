@@ -34,6 +34,8 @@ POST    /posts                                            controllers.PostContro
 GET     /posts/isMyPost/:postId                           controllers.PostController.isMyPost(postId: Long)
 GET     /posts/fromFriends                                controllers.PostController.getAllFromFriends()
 GET     /posts/:userId                                    controllers.PostController.getAllForUser(userId: Long)
+GET     /posts/:userId/liked                              controllers.PostController.getLikedByUser(userId: Long)
+GET     /posts/:userId/disliked                           controllers.PostController.getDislikedByUser(userId: Long)
 PUT     /posts/:postId                                    controllers.PostController.updatePost(postId: Long)
 DELETE  /posts/:postId                                    controllers.PostController.deletePost(postId: Long)
 

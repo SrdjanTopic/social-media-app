@@ -40,13 +40,45 @@ class PostRepository @Inject()()(implicit ec: ExecutionContext){
     db.run(query)
   }
 
-  def getAllForUser(userId:Long, myId:Long): Future[Seq[PostWithUserDTO]] = {
+  def getAllForUser(userId:Long, myId:Long): Future[Vector[PostWithUserDTO]] = {
     implicit val getResults: GetResult[PostWithUserDTO] =
       GetResult(pr => PostWithUserDTO(pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<))
     val query = sql"""select posts.id, text, creationDate, likeCount, dislikeCount, posts.userId, username, fullName, table1.isLiked
                      |from posts left outer join (select * from postRatings where postRatings.userId=$myId) as table1
                      |    on posts.id = table1.postId inner join users on users.id = posts.userId
                      |where posts.userId=$userId
+                     |order by creationDate desc;""".stripMargin.as[PostWithUserDTO]
+    db.run(query)
+  }
+
+  def getLikedByUser(userId:Long, myId:Long) = {
+    implicit val getResults: GetResult[PostWithUserDTO] =
+      GetResult(pr => PostWithUserDTO(pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<))
+    val query = sql"""select id, text, creationDate, likeCount, dislikeCount, table1.userId, username, fullName, table2.isLiked
+                     |from
+                     |	(select p1.id, p1.text, p1.creationDate, p1.likeCount, p1.dislikeCount, p1.userId, u1.username, u1.fullName
+                     |	from postRatings pr
+                     |	inner join posts p1 on pr.postId=p1.id
+                     |	inner join users u1 on u1.id=p1.userId
+                     |	where pr.userId=$userId and pr.isLiked=true) as table1
+                     |left outer join
+                     |	(select * from postRatings where postRatings.userId=$myId) as table2 on table1.id=table2.postId
+                     |order by creationDate desc;""".stripMargin.as[PostWithUserDTO]
+    db.run(query)
+  }
+
+  def getDislikedByUser(userId: Long, myId: Long) = {
+    implicit val getResults: GetResult[PostWithUserDTO] =
+      GetResult(pr => PostWithUserDTO(pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<, pr.<<))
+    val query = sql"""select id, text, creationDate, likeCount, dislikeCount, table1.userId, username, fullName, table2.isLiked
+                     |from
+                     |	(select p1.id, p1.text, p1.creationDate, p1.likeCount, p1.dislikeCount, p1.userId, u1.username, u1.fullName
+                     |	from postRatings pr
+                     |	inner join posts p1 on pr.postId=p1.id
+                     |	inner join users u1 on u1.id=p1.userId
+                     |	where pr.userId=$userId and pr.isLiked=false) as table1
+                     |left outer join
+                     |	(select * from postRatings where postRatings.userId=$myId) as table2 on table1.id=table2.postId
                      |order by creationDate desc;""".stripMargin.as[PostWithUserDTO]
     db.run(query)
   }

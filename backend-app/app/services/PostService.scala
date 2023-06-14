@@ -27,6 +27,20 @@ class PostService @Inject()(postRepository:PostRepository, userRepository: UserR
     }
   }
 
+  def getLikedByUser(userId: Long, myId: Long): Future[Either[String, Seq[PostWithUserDTO]]] = {
+    userRepository.existsById(userId).flatMap {
+      case true => postRepository.getLikedByUser(userId, myId).map(res => Right(res))
+      case false => Future.successful(Left(s"User with ID:'${userId}' does not exist!"))
+    }
+  }
+
+  def getDislikedByUser(userId: Long, myId: Long): Future[Either[String, Seq[PostWithUserDTO]]] = {
+    userRepository.existsById(userId).flatMap {
+      case true => postRepository.getDislikedByUser(userId, myId).map(res => Right(res))
+      case false => Future.successful(Left(s"User with ID:'${userId}' does not exist!"))
+    }
+  }
+
   def createPost(postInfo: CreatePostDTO): Future[Either[String, PostDTO]] = {
     userRepository.existsById(postInfo.userId).flatMap {
       case true => postRepository.createPost(Post(-1, postInfo.text, postInfo.userId)).map(createdPost => Right(PostDTO(

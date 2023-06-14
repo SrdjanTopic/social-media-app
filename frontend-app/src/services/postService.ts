@@ -20,6 +20,24 @@ async function getUserPosts(userID: number): Promise<Post[]> {
   }
 }
 
+async function getLikedByUserPosts(userID: number): Promise<Post[]> {
+  try {
+    const res = await _axios.get(`${url}/${userID}/liked`);
+    return res;
+  } catch (ex) {
+    throw new Error("error!");
+  }
+}
+
+async function getDislikedByUserPosts(userID: number): Promise<Post[]> {
+  try {
+    const res = await _axios.get(`${url}/${userID}/disliked`);
+    return res;
+  } catch (ex) {
+    throw new Error("error!");
+  }
+}
+
 async function deletePost(postId: number) {
   try {
     const res = await _axios.deleteReq(`${url}/${postId}`);
@@ -59,6 +77,8 @@ async function isMyPost(postId: number) {
 const postService = {
   getFriendPosts,
   getUserPosts,
+  getLikedByUserPosts,
+  getDislikedByUserPosts,
   deletePost,
   createPost,
   updatePost,

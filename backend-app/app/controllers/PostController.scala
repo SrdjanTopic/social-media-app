@@ -25,13 +25,27 @@ class PostController @Inject()(postService:PostService, authenticatedAction: Aut
     }
   }
 
-  def getAllFromFriends() = authenticatedAction.async(request => {
+  def getAllFromFriends() = authenticatedAction.async { request =>
     val userId: Long = request.userId.toLong
-    postService.getAllFromFriends(userId).map{
+    postService.getAllFromFriends(userId).map {
       case Left(errorMessage) => Conflict(Json.obj("message" -> errorMessage))
       case Right(posts) => Ok(Json.toJson(posts))
     }
-  })
+  }
+
+  def getLikedByUser(userId: Long) = authenticatedAction.async { request =>
+    postService.getLikedByUser(userId, request.userId.toLong).map {
+      case Left(errorMessage) => Conflict(Json.obj("message" -> errorMessage))
+      case Right(posts) => Ok(Json.toJson(posts))
+    }
+  }
+
+  def getDislikedByUser(userId: Long) = authenticatedAction.async { request =>
+    postService.getDislikedByUser(userId, request.userId.toLong).map {
+      case Left(errorMessage) => Conflict(Json.obj("message" -> errorMessage))
+      case Right(posts) => Ok(Json.toJson(posts))
+    }
+  }
 
   def createPost() = authenticatedAction(parse.json[CreatePostFrontDTO]).async{ implicit request =>
     val post: CreatePostFrontDTO = request.body
