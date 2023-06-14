@@ -13,10 +13,6 @@ import slick.jdbc.MySQLProfile.api._
 import javax.inject.Singleton
 @Singleton
 class PostRepository @Inject()()(implicit ec: ExecutionContext){
-  def isMyPost(postId:Long, userId:Long): Future[Boolean] = {
-    db.run(SlickTables.postTable.filter(post => post.id === postId && post.userId === userId).exists.result)
-  }
-
   def existsById(postId: Long): Future[Boolean] = {
     db.run(SlickTables.postTable.filter(_.id === postId).exists.result)
   }

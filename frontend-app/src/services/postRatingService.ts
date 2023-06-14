@@ -2,15 +2,6 @@ import _axios from "./_axios";
 
 const url = import.meta.env.VITE_URL_BACK + "/postRatings";
 
-async function getIsLikedByMe(postId: number) {
-  try {
-    const res = await _axios.get(`${url}/${postId}`);
-    return res;
-  } catch (ex) {
-    throw new Error("error!");
-  }
-}
-
 async function removeRating(postId: number) {
   try {
     const res = await _axios.deleteReq(`${url}/${postId}`);
@@ -39,7 +30,6 @@ async function updateRating(postId: number, isLiked: boolean) {
 }
 
 const postRatingService = {
-  getIsLikedByMe,
   removeRating,
   addRating,
   updateRating,

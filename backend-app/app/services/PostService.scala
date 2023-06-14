@@ -9,10 +9,6 @@ import javax.inject.Singleton
 import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class PostService @Inject()(postRepository:PostRepository, userRepository: UserRepository)(implicit ec: ExecutionContext){
-  def isMyPost (postId:Long, userId:Long) = {
-    postRepository.isMyPost(postId, userId)
-  }
-
   def getAllForUser(userId: Long, myId:Long): Future[Either[String, Seq[PostWithUserDTO]]] = {
     userRepository.existsById(userId).flatMap {
       case true => postRepository.getAllForUser(userId, myId).map(res=>Right(res))

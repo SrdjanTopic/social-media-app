@@ -31,7 +31,6 @@ DELETE  /friends/:friendId                                controllers.FriendsCon
 
 # POST ROUTES
 POST    /posts                                            controllers.PostController.createPost()
-GET     /posts/isMyPost/:postId                           controllers.PostController.isMyPost(postId: Long)
 GET     /posts/fromFriends                                controllers.PostController.getAllFromFriends()
 GET     /posts/:userId                                    controllers.PostController.getAllForUser(userId: Long)
 GET     /posts/:userId/liked                              controllers.PostController.getLikedByUser(userId: Long)
@@ -40,8 +39,6 @@ PUT     /posts/:postId                                    controllers.PostContro
 DELETE  /posts/:postId                                    controllers.PostController.deletePost(postId: Long)
 
 # POST RATING ROUTES
-GET     /postRatings                                      controllers.PostRatingController.getAllForUser()
-GET     /postRatings/:postId                              controllers.PostRatingController.getIsLikedByUser(postId: Long)
 POST    /postRatings                                      controllers.PostRatingController.addRating()
 PUT     /postRatings                                      controllers.PostRatingController.updateRating()
 DELETE  /postRatings/:postId                              controllers.PostRatingController.deleteRating(postId: Long)

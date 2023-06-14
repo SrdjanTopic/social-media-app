@@ -14,10 +14,6 @@ import scala.concurrent.ExecutionContext
 
 @Singleton
 class PostController @Inject()(postService:PostService, authenticatedAction: AuthenticatedAction)(val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext) extends BaseController {
-  def isMyPost(postId: Long) = authenticatedAction.async { request =>
-    postService.isMyPost(postId, request.userId.toLong).map(res=>Ok(Json.toJson(res)))
-  }
-
   def getAllForUser(userId:Long) = authenticatedAction.async{ request=>
     postService.getAllForUser(userId, request.userId.toLong).map{
       case Left(errorMessage) => Conflict(Json.obj("message" -> errorMessage))

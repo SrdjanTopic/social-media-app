@@ -65,15 +65,6 @@ async function updatePost(postId: number, text: string) {
   }
 }
 
-async function isMyPost(postId: number) {
-  try {
-    const res = await _axios.get(`${url}/isMyPost/${postId}`);
-    return res;
-  } catch (ex) {
-    throw new Error("Some error occured");
-  }
-}
-
 const postService = {
   getFriendPosts,
   getUserPosts,
@@ -82,7 +73,6 @@ const postService = {
   deletePost,
   createPost,
   updatePost,
-  isMyPost,
 };
 
 export default postService;
