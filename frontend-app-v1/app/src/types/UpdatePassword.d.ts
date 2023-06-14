@@ -1,3 +1,0 @@
-type UpdatePassword = {
-  newPassword: string;
-};
