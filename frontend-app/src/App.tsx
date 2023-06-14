@@ -14,6 +14,8 @@ import FriendsTab from "./pages/ProfilePage/Tabs/FriendsTab";
 import AboutTab from "./pages/ProfilePage/Tabs/AboutTab";
 import PostsTab from "./pages/ProfilePage/Tabs/PostsTab";
 import FriendsPage from "./pages/FriendsPage";
+import LikedTab from "./pages/ProfilePage/Tabs/LikedTab";
+import DislikedTab from "./pages/ProfilePage/Tabs/DislikedTab";
 
 export const UserContext = React.createContext<User>({
   id: -1,
@@ -54,8 +56,8 @@ export default function App() {
               <Route path="about" element={<AboutTab />} />
               <Route path="friends" element={<FriendsTab />} />
               <Route path="posts" element={<PostsTab />} />
-              <Route path="liked" element={<h2>Liked</h2>} />
-              <Route path="disliked" element={<h2>Disliked</h2>} />
+              <Route path="liked" element={<LikedTab />} />
+              <Route path="disliked" element={<DislikedTab />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>
             <Route

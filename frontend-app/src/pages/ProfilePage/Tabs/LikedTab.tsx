@@ -1,11 +1,11 @@
 import { useOutletContext } from "react-router-dom";
-import NotFriendsPage from "../../fallbackPages/NotFriendsPage";
-import useGetUserPosts from "../../../hooks/post/useGetUserPosts";
+import useGetLikedPosts from "../../../hooks/post/useGetLikedPosts";
 import Post from "../../../components/smallComponents/Post/Post";
+import NotFriendsPage from "../../fallbackPages/NotFriendsPage";
 
-export default function PostsTab() {
+export default function LikedTab() {
   const user = useOutletContext<{ user: User }>().user;
-  const [posts, setPosts] = useGetUserPosts(user.id);
+  const [posts, setPosts] = useGetLikedPosts(user.id);
 
   function setPost(post: Post) {
     setPosts(
