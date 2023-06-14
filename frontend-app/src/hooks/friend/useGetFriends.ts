@@ -19,9 +19,5 @@ export default function useGetFriends(userId: number | null): CustomStateHook {
         .catch((err) => console.log(err));
   }, [userId]);
 
-  const customSetState = (newState: User[]) => {
-    setFriends(newState);
-  };
-
-  return [friends, customSetState];
+  return [friends, setFriends];
 }

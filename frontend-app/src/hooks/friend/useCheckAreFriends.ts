@@ -13,9 +13,5 @@ export default function useCheckAreFriends(userId: number): CustomStateHook {
       .catch((err) => console.log(err));
   }, [userId]);
 
-  function customSetState(newState: boolean) {
-    setIsMyFriend(newState);
-  }
-
-  return [isMyFriend, customSetState];
+  return [isMyFriend, setIsMyFriend];
 }

@@ -3,12 +3,12 @@ import postService from "../../services/postService";
 
 type CustomStateHook = [Post[], (newState: Post[]) => void];
 
-export default function useGetUserPosts(userId: number): CustomStateHook {
+export default function useGetDislikedPosts(userId: number): CustomStateHook {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     postService
-      .getUserPosts(userId)
+      .getDislikedByUserPosts(userId)
       .then((posts) => setPosts(posts))
       .catch((err) => console.log(err));
   }, [userId]);

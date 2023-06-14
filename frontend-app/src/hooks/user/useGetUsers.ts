@@ -20,7 +20,7 @@ export default function useGetUsers(
       .catch((err) => console.log(err));
   }, []);
 
-  const customSetState = (username: string | null, fullName: string | null) => {
+  const filterSetState = (username: string | null, fullName: string | null) => {
     userService
       .getNonFriends(username, fullName)
       .then((users) => setUsers(users))
@@ -31,5 +31,5 @@ export default function useGetUsers(
     setUsers(newState);
   };
 
-  return [users, normalSetUsers, customSetState];
+  return [users, normalSetUsers, filterSetState];
 }
